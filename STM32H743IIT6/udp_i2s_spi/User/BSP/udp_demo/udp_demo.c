@@ -48,13 +48,15 @@ void Udp_Receive_Callback(void *arg,struct udp_pcb *upcb,struct pbuf *p, ip_addr
 				if(Mode_Switch == 0)//判断切换模式：标准模式	校准模式
 				{
 					Mode_Switch = 2;
+					//将AD7767外部中断失能
+					HAL_EXTI_DISABLE(11);
 					// 标准模式下，播放音频1s
 					Audio_Play(Hz_Audio,Db_Audio);
 				}
 				else if(Mode_Switch == 1)
 				{
 					//校准模式下操作
-					 
+					 HAL_EXTI_ENABLE(11);
 				}
 		pbuf_free(p);
 	}

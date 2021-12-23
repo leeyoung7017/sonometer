@@ -32,6 +32,8 @@ void AD7767_EXTI_Config(void);
 void AD7767_SPI_Config(void);
 void AD7767_Reset(void);
 void SPI_Tx_Byte(uint8_t Tx);
+void HAL_EXTI_ENABLE(int GPIO_PIN_X);
+void HAL_EXTI_DISABLE(int GPIO_PIN_X);
 uint32_t Convert_8to24(uint8_t *pdata);
 
 #endif

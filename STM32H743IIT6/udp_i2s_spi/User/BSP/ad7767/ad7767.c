@@ -91,8 +91,27 @@ void AD7767_EXTI_Config(void)
 	/* EXTI interrupt init*/
 	HAL_NVIC_SetPriority(DRDY_EXTI_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(DRDY_EXTI_IRQn);
+
+	HAL_EXTI_DISABLE(GPIO_PIN_14);
 }
 
+/**
+ * @brief 使能/失能外部中断
+ * 
+ * @par GPIO_InitTypeDef *GPIO_InitStructure	所对引脚的外部中断
+ * 
+ * */
+void HAL_EXTI_ENABLE(int GPIO_PIN_X)
+{
+	//外部中断使能
+	EXTI->IMR1 |= 1<<GPIO_PIN_X;
+}
+
+void HAL_EXTI_DISABLE(int GPIO_PIN_X)
+{
+	//外部中断失能
+	EXTI->IMR1 &= ~(1<<GPIO_PIN_X);
+}
 SPI_HandleTypeDef hspi3;	
 void AD7767_SPI_Config(void)
 {
@@ -190,10 +209,13 @@ void EXTI15_10_IRQHandler(void)
 	// 按键反馈 外部中断
 	if(__HAL_GPIO_EXTI_GET_IT(KEY_CTR_Pin) != RESET)
 	{
-//		uint8_t flag_led = 1;
+		static uint8_t flag_led = 1;
 		HAL_Delay(10);
 	/******按键中断操作********/
-		
+		if(flag_led)
+			LED2(1);
+		else
+			LED2(0);
 	/*************************/
 		
 		__HAL_GPIO_EXTI_CLEAR_IT(KEY_CTR_Pin);
