@@ -16,6 +16,8 @@
 #include <QHostAddress>
 #include <math.h>
 #include "pcm.h"
+#include <QCloseEvent>
+#include "chart.h"
 
 #define UDP_PORT_LOCAL_TEST 6678
 
@@ -51,6 +53,8 @@ public:
     void Chart_Title_Config(QChart *chart,const QString &title);
     void delete_series(QSplineSeries *series);
 
+protected:
+    void closeEvent(QCloseEvent *event);//窗口关闭触发事件
 
 private slots:
     void on_data_button_clicked();

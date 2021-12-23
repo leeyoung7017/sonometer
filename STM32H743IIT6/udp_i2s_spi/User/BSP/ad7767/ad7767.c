@@ -11,6 +11,9 @@ void AD7767_Init(void)
 {
 	/* ad7767 gpio config */
 	AD7767_GPIO_Init();
+
+	/* AD7767 Reset */
+	AD7767_Reset();
 	
 	/* DRDY EXTI Configuration */
 	AD7767_EXTI_Config();
@@ -18,8 +21,7 @@ void AD7767_Init(void)
 	/* ad7767 spi Configuration */
 	AD7767_SPI_Config();
 	
-	/* AD7767 Reset */
-	AD7767_Reset();
+
 }
 
 
@@ -92,7 +94,10 @@ void AD7767_EXTI_Config(void)
 	HAL_NVIC_SetPriority(DRDY_EXTI_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(DRDY_EXTI_IRQn);
 
-	HAL_EXTI_DISABLE(GPIO_PIN_14);
+//	HAL_EXTI_DISABLE(DRDY_Pin);
+/*********************TEST USED*****************************/
+	HAL_EXTI_ENABLE(DRDY_Pin);
+/***********************************************************/
 }
 
 /**
@@ -101,16 +106,16 @@ void AD7767_EXTI_Config(void)
  * @par GPIO_InitTypeDef *GPIO_InitStructure	所对引脚的外部中断
  * 
  * */
-void HAL_EXTI_ENABLE(int GPIO_PIN_X)
+void HAL_EXTI_ENABLE(uint16_t GPIO_PIN_X)
 {
 	//外部中断使能
-	EXTI->IMR1 |= 1<<GPIO_PIN_X;
+	EXTI->IMR1 |= GPIO_PIN_X;
 }
 
-void HAL_EXTI_DISABLE(int GPIO_PIN_X)
+void HAL_EXTI_DISABLE(uint16_t GPIO_PIN_X)
 {
 	//外部中断失能
-	EXTI->IMR1 &= ~(1<<GPIO_PIN_X);
+	EXTI->IMR1 &= ~(GPIO_PIN_X);
 }
 SPI_HandleTypeDef hspi3;	
 void AD7767_SPI_Config(void)
@@ -123,7 +128,7 @@ void AD7767_SPI_Config(void)
 	hspi3.Instance = SPI3;
 	hspi3.Init.Mode = SPI_MODE_MASTER;
 	hspi3.Init.Direction = SPI_DIRECTION_2LINES;
-	hspi3.Init.DataSize = SPI_DATASIZE_8BIT;
+	hspi3.Init.DataSize = SPI_DATASIZE_24BIT;
 
 	//上升沿采集信号		时钟初始默认状态为低电平，
 	hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
@@ -172,6 +177,7 @@ void AD7767_Reset(void)
 	SYNC_PD(1);
 	//建立时间
 	// HAL_Delay_us(2370);
+	while(HAL_GPIO_ReadPin(DRDY_GPIO_Port,DRDY_Pin) != RESET);//等待DRDY下降沿
 }
 
 /**
@@ -187,22 +193,25 @@ void SPI_Tx_Byte(uint8_t Tx)
 }
 
 
+uint32_t i = 0;
 /**
  * @brief 外部中断处理函数
  * 			主要处理SPI接收数据，如果DRDY引脚发生外部下降沿中断，开启数据SPI MISO接收数据
  * 
  */
-uint32_t rx_from_ad7767 = 0;
+uint32_t rx_from_ad7767[3000] = {0};
 void EXTI15_10_IRQHandler(void)
 {
 	//AD7767 DRDY 引脚外部中断，接收数据
-	if(__HAL_GPIO_EXTI_GET_IT(DRDY_EXTI_IRQn) != RESET)
+	if(__HAL_GPIO_EXTI_GET_IT(DRDY_Pin) != RESET)
 	{	
-
+		
 		uint8_t data[3] = {0};//SPI 获取三个字节数据
 		HAL_SPI_Receive(&hspi3,data,3,10);
 		__HAL_GPIO_EXTI_CLEAR_IT(DRDY_EXTI_IRQn);
-		rx_from_ad7767 = Convert_8to24(data);
+		rx_from_ad7767[i] = Convert_8to24(data);
+		i++;
+		if(i == 100) i=0;
 
 	}
 	
@@ -235,6 +244,4 @@ uint32_t Convert_8to24(uint8_t *pdata)
 	rx = (pdata[0]<<(8*2)) + (pdata[1]<<(8*1)) + pdata[2];
 	return rx;
 }
-
-
 

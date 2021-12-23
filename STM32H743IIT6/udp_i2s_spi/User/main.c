@@ -73,7 +73,7 @@ int main(void)
 {
 	
   /* 对ETH使用的内存开启保护*/
-  MPU_Config(); 
+   MPU_Config(); 
 
   /* Enable I-Cache */
   SCB_EnableICache();

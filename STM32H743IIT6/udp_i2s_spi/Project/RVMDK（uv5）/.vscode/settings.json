@@ -3,7 +3,8 @@
         "ad7767.h": "c",
         "main.h": "c",
         "core_delay.h": "c",
-        "stm32h7xx_hal.h": "c"
+        "stm32h7xx_hal.h": "c",
+        "bsp_key.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

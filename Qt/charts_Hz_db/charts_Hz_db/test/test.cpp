@@ -178,3 +178,13 @@ void test::on_clear_clicked()
         delete_series(series);
     }
 }
+
+//关闭窗口触发事件
+void test::closeEvent(QCloseEvent *event)
+{
+    QByteArray data0;
+    data0.append(1-1);
+    data0.append(1-1);
+    my_udpsocket_rx->writeDatagram(data0,QHostAddress("192.168.1.30"),UDP_PORT_LOCAL_CHART);
+}
+

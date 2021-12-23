@@ -26,7 +26,7 @@ void KEY_Init(void)
     HAL_NVIC_SetPriority(EXTI15_10_IRQn,0,0);       //抢占优先级为2，子优先级为0
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);             //使能中断线0
 
-	HAL_EXTI_DISABLE(11);
+	// HAL_EXTI_DISABLE(GPIO_PIN_11);
 }
 
 

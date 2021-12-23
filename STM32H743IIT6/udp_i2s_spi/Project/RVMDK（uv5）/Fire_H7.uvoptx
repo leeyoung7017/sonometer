@@ -159,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>34</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134248634</Address>
+          <Address>134248850</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -175,7 +175,7 @@
           <Type>0</Type>
           <LineNumber>116</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134256306</Address>
+          <Address>134256418</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -189,25 +189,25 @@
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>50</LineNumber>
+          <LineNumber>125</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134248690</Address>
+          <Address>134256420</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>E:\project\sonometer\32h743\Temple\udp_i2s_spi\Project\User\BSP\udp_demo\udp_demo.c</Filename>
+          <Filename>E:\project\sonometer\32h743\Temple\udp_i2s_spi\Project\User\main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Fire_H7\../../User/BSP/udp_demo/udp_demo.c\50</Expression>
+          <Expression>\\Fire_H7\../../User/main.c\125</Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>221</LineNumber>
+          <LineNumber>16</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134222784</Address>
+          <Address>134219314</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -216,14 +216,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>E:\project\sonometer\32h743\Temple\udp_i2s_spi\Project\User\BSP\ad7767\ad7767.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Fire_H7\../../User/BSP/ad7767/ad7767.c\221</Expression>
+          <Expression>\\Fire_H7\../../User/BSP/ad7767/ad7767.c\16</Expression>
         </Bp>
         <Bp>
           <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>218</LineNumber>
+          <LineNumber>22</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134222774</Address>
+          <Address>134219322</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -232,7 +232,71 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>E:\project\sonometer\32h743\Temple\udp_i2s_spi\Project\User\BSP\ad7767\ad7767.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Fire_H7\../../User/BSP/ad7767/ad7767.c\218</Expression>
+          <Expression>\\Fire_H7\../../User/BSP/ad7767/ad7767.c\22</Expression>
+        </Bp>
+        <Bp>
+          <Number>5</Number>
+          <Type>0</Type>
+          <LineNumber>173</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219340</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>E:\project\sonometer\32h743\Temple\udp_i2s_spi\Project\User\BSP\ad7767\ad7767.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Fire_H7\../../User/BSP/ad7767/ad7767.c\173</Expression>
+        </Bp>
+        <Bp>
+          <Number>6</Number>
+          <Type>0</Type>
+          <LineNumber>174</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219356</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>E:\project\sonometer\32h743\Temple\udp_i2s_spi\Project\User\BSP\ad7767\ad7767.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Fire_H7\../../User/BSP/ad7767/ad7767.c\174</Expression>
+        </Bp>
+        <Bp>
+          <Number>7</Number>
+          <Type>0</Type>
+          <LineNumber>172</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219330</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>E:\project\sonometer\32h743\Temple\udp_i2s_spi\Project\User\BSP\ad7767\ad7767.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Fire_H7\../../User/BSP/ad7767/ad7767.c\172</Expression>
+        </Bp>
+        <Bp>
+          <Number>8</Number>
+          <Type>0</Type>
+          <LineNumber>55</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\User\BSP\udp_demo\udp_demo.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -305,6 +369,11 @@
           <count>13</count>
           <WinNumber>1</WinNumber>
           <ItemText>data_Hz_16</ItemText>
+        </Ww>
+        <Ww>
+          <count>14</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rx_from_ad7767</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -411,7 +480,7 @@
 
   <Group>
     <GroupName>STM32H7xx_HAL_Driver</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

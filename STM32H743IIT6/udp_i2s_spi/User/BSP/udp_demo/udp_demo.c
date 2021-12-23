@@ -18,7 +18,7 @@ void Udp_Receive_Callback(void *arg,struct udp_pcb *upcb,struct pbuf *p, ip_addr
 	struct pbuf *q;
 	if(p != NULL)	//接收非空时
 	{
-		memset(udp_demo_recvbuf,0,UDP_DEMO_RX_BUFSIZE);
+		memset(udp_demo_recvbuf,'\0',UDP_DEMO_RX_BUFSIZE);
 		for(q=p;q!=NULL;q=q->next)
 		{
 			if(q->len > (UDP_DEMO_RX_BUFSIZE-data_len)) 
@@ -33,31 +33,36 @@ void Udp_Receive_Callback(void *arg,struct udp_pcb *upcb,struct pbuf *p, ip_addr
 		/* 指示已经完成一次数据的接收 */
 		LED_ONOFF(LED(2));
 
-		/*解析ETH接收指令*/
-		if(Instruction_Parsed_ETH() == SUCCESS)		//解析正确
+		if(Mode_Func_Conv() != SUCCESS)
 		{
-			tcp_demo_sendbuf = "OK\n";
-			udp_demo_senddata(udp_demo_pcb);
+			return ;
 		}
-		else if(Instruction_Parsed_ETH() == ERROR)	//解析错误
-		{
-			tcp_demo_sendbuf = "ERR";
-			udp_demo_senddata(udp_demo_pcb);
-		}
-		/* 定时器更新中断处理 */
-				if(Mode_Switch == 0)//判断切换模式：标准模式	校准模式
-				{
-					Mode_Switch = 2;
-					//将AD7767外部中断失能
-					HAL_EXTI_DISABLE(11);
-					// 标准模式下，播放音频1s
-					Audio_Play(Hz_Audio,Db_Audio);
-				}
-				else if(Mode_Switch == 1)
-				{
-					//校准模式下操作
-					 HAL_EXTI_ENABLE(11);
-				}
+		
+		// /*解析ETH接收指令*/
+		// if(Instruction_Parsed_ETH() == SUCCESS)		//解析正确
+		// {
+		// 	tcp_demo_sendbuf = "OK\n";
+		// 	udp_demo_senddata(udp_demo_pcb);
+		// }
+		// else if(Instruction_Parsed_ETH() == ERROR)	//解析错误
+		// {
+		// 	tcp_demo_sendbuf = "ERR";
+		// 	udp_demo_senddata(udp_demo_pcb);
+		// }
+		// /* 定时器更新中断处理 */
+		// if(Mode_Switch == 0)//判断切换模式：标准模式	校准模式
+		// {
+		// 	Mode_Switch = 2;
+		// 	//将AD7767外部中断失能
+		// 	HAL_EXTI_DISABLE(11);
+		// 	// 标准模式下，播放音频1s
+		// 	Audio_Play(Hz_Audio,Db_Audio);
+		// }
+		// else if(Mode_Switch == 1)
+		// {
+		// 	//校准模式下操作
+		// 		HAL_EXTI_ENABLE(11);
+		// }
 		pbuf_free(p);
 	}
 	else
@@ -142,6 +147,11 @@ ErrorStatus Instruction_Parsed_ETH(void)
 				}
 			}
 		}
+		else if(udp_demo_recvbuf[1] == 0 && udp_demo_recvbuf[2] == '\0')//校准模式关闭窗口,关闭EXTI外部中断
+		{
+			HAL_EXTI_DISABLE(GPIO_PIN_14);
+			return SUCCESS;
+		}
 	}
 	/* 解析音频传输指令 校准模式*/
 	else if(udp_demo_recvbuf[0] == 0x01)
@@ -155,6 +165,50 @@ ErrorStatus Instruction_Parsed_ETH(void)
 	}
 	
 	return ERROR;
+}
+
+
+/**
+ *@brief 指令解析与功能实现 
+ *@param none
+ *@return 返回枚举类型，判断解析指令是否错误
+ *
+ */
+ErrorStatus Mode_Func_Conv(void)
+{
+	/*解析ETH接收指令*/
+	if(Instruction_Parsed_ETH() == SUCCESS)		//解析正确
+	{
+		tcp_demo_sendbuf = "OK\n";
+		udp_demo_senddata(udp_demo_pcb);
+	}
+	else if(Instruction_Parsed_ETH() == ERROR)	//解析错误
+	{
+		tcp_demo_sendbuf = "ERR";
+		udp_demo_senddata(udp_demo_pcb);
+		return ERROR;
+	}
+	/* 定时器更新中断处理 */
+	if(Mode_Switch == 0)//标准模式
+	{
+		Mode_Switch = 2;
+		//将AD7767外部中断失能
+		HAL_EXTI_DISABLE(DRDY_Pin);
+		//按键外部中断使能
+		HAL_EXTI_DISABLE(KEY_CTR_Pin);
+
+		// 标准模式下，播放音频1s
+		Audio_Play(Hz_Audio,Db_Audio);
+	}
+	else if(Mode_Switch == 1)
+	{
+		//校准模式下操作
+		//AD7767 外部中断使能
+		HAL_EXTI_ENABLE(DRDY_Pin);
+		//按键外部中断失能
+		HAL_EXTI_DISABLE(KEY_CTR_Pin);
+	}
+	return SUCCESS;
 }
 
 
