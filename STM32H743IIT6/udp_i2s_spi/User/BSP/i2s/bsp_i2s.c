@@ -164,8 +164,7 @@ void Audio_Play(uint32_t Hz,uint32_t Db)
     uint32_t index = 0;
 		uint16_t data_Hz_16[8824] = {0};//(uint16_t *)malloc(44000/Hz_Audio*4); //存储相应频率的音频数据
     n = Hz / 20;
-
-     
+ 
 		memset(data_Hz,0,8824);
     //清空播放数组  
     memset(data_Hz_16,0,44000/Hz_Audio*4); 
@@ -178,7 +177,6 @@ void Audio_Play(uint32_t Hz,uint32_t Db)
           index++;
         }
     }
-
   /* 将音频数据转化为16位 默认单声道为左声道 */
   Convert24To16(data_Hz,44000/Hz_Audio*4);
 		
@@ -191,12 +189,11 @@ void Audio_Play(uint32_t Hz,uint32_t Db)
 			data_Hz_16[n] = data_Hz[n];
 		}
   /*********************************************************************************/
-  //音频数据传输，传输1s的数据，即为传递Hz个24位数据
+  /* 音频数据传输，传输1s的数据，即为传递Hz个24位数据 */
 //	for(n = 0;n<Hz_Audio;n++)
 		while(1)
 	{
 		HAL_I2S_Transmit(&I2S_HandleStructure,data_Hz_16,44000/Hz_Audio*2,HAL_MAX_DELAY);
-//		HAL_I2S_Transmit(&I2S_HandleStructure,data1_16,8,HAL_MAX_DELAY);
 	}
   
   /*********************************************************************************/

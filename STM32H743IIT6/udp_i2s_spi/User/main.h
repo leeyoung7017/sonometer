@@ -39,6 +39,7 @@ extern uint8_t Mode_Switch;    //标准模式与校准模式的切换；0：标准模式     1：校
 
 
 static void udp_demo_Init(void);
+void udp_lwip_check(void);
 void Error_Handler(void);
 static void SystemClock_Config(void);
 static void MPU_Config(void);

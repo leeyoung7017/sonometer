@@ -15,6 +15,7 @@
   ******************************************************************
   */  
 #include "stm32h7xx.h"
+#include "stdio.h"
 #include "main.h"
 #include "bsp_led.h"
 #include "bsp_i2s.h"
@@ -59,9 +60,17 @@ uint16_t data1_16[16] = {
 	0xBE00,0x80BA,0x00,0x00,//0xBE00,0x80BA,
 	0x1E00,0x8118,0x00,0x00,//0x1E00,0x8118,
 	0x7C00,0x8175,0x00,0x00//0x7C00,0x8175
-
 };
 
+typedef struct{
+	uint32_t SysCLKFreq;
+	uint32_t HCLKFreq;
+	uint32_t PCLK1Freq;
+	uint32_t PCLK2Freq;
+	uint32_t USART1Freq;
+}CLKFreq;
+
+CLKFreq CLK = {0};
 
 int flag = 0;
 /**
@@ -71,7 +80,7 @@ int flag = 0;
   */
 int main(void)
 {
-	
+//	uint8_t data = 0x55;
   /* 对ETH使用的内存开启保护*/
    MPU_Config(); 
 
@@ -83,20 +92,18 @@ int main(void)
   //将Cache设置write-through方式
   SCB->CACR|=1<<2;
 
-  /* 配置系统时钟为480 MHz */
+	HAL_Init();
+  /* 配置系统时钟为480MHz */
   SystemClock_Config();
-
-
-
+	
   /* 初始化RGB彩灯 */
   LED_GPIO_Config();
 
   /* 按键外部中断初始化 */
-  KEY_Init();
+//  KEY_Init();
 
-	
 	/* ad7767 初始化 */
-	AD7767_Init();
+//	AD7767_Init();
 
   /* 初始化USART1 配置模式为 115200 8-N-1 */
   DEBUG_USART_Config();
@@ -109,53 +116,39 @@ int main(void)
 	
 	/* 配置TIM1	 120M/(120 * 5000) */
 //  TIMx_Init(12000,10000-1);
-    
+
+
 	/* 提示网口通信已经配置完成 */
-	LED1(1);
+//	LED1(1);
 	
     while (1)
     {  
-    /*********************** SPI MOSI Tx **************************/
-    // spi_tx_byte();
-    /***************************************************************/  
-		/*********************** I2S 数据传输 **************************/
-//			HAL_I2S_Transmit(&I2S_HandleStructure,data1_16,16,1000);
-		/***************************************************************/
-    /* 从以太网缓冲区中读取数据包，交给LwIP处理 */
-				if(flag)
-        {
-          flag = 0;
-			
-          //调用网卡接收函数
-          ethernetif_input(&gnetif);
-        }
-        /* 处理 LwIP 超时 */
-        sys_check_timeouts();
-			
-//				/*解析ETH接收指令*/
-//			if(Instruction_Parsed_ETH() == SUCCESS)		//解析正确
-//			{
-//				/* 定时器更新中断处理 */
-//					if(Mode_Switch == 0)//判断切换模式：标准模式	校准模式
-//					{
-//	//					Mode_Switch = 2;
-//						//标准模式下，播放音频1s
-//						Audio_Play(Hz_Audio,Db_Audio);
-//					}
-//					else if(Mode_Switch == 1)
-//					{
-//						//校准模式下操作 
-//					}
-//			}
-				
-				
+      /* 从以太网缓冲区中读取数据包，交给LwIP处理 */
+      udp_lwip_check();				
     }					
 }
 
 /**
+ * @brief  从以太网缓冲区中读取数据包，交给LwIP进行处理
+ * @param  flag 需要用到外部的全局变量进行标志位，进行网卡接收数据
+ * @return None
+ */
+void udp_lwip_check(void)
+{
+  if(flag)
+  {
+    flag = 0;
+    //调用网卡接收函数
+    ethernetif_input(&gnetif);
+  }
+  /* 处理 LwIP 超时 */
+  sys_check_timeouts();
+}
+
+/**
   *@brief	UDP Configuration
-  *
-  *
+  *@param None
+  *@return None
 */
 void udp_demo_Init(void)
 {
@@ -163,7 +156,7 @@ void udp_demo_Init(void)
     lwip_init();
 	
     printf("LAN8720A Ethernet Demo\n");
-    printf("LwIP版本：%s\n",LWIP_VERSION_STRING);
+    printf("LwIP版本: %s\n",LWIP_VERSION_STRING);
 	
     printf("ping实验例程\n");
 	
@@ -208,6 +201,7 @@ static void SystemClock_Config(void)
 {
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
   RCC_OscInitTypeDef RCC_OscInitStruct;
+	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   HAL_StatusTypeDef ret = HAL_OK;
   
   /*使能供电配置更新 */
@@ -227,8 +221,8 @@ static void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
 
-  RCC_OscInitStruct.PLL.PLLM = 5;
-  RCC_OscInitStruct.PLL.PLLN = 192;
+  RCC_OscInitStruct.PLL.PLLM = 1;
+  RCC_OscInitStruct.PLL.PLLN = 120;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
@@ -259,6 +253,12 @@ static void SystemClock_Config(void)
   if(ret != HAL_OK)
   {
     while(1) { ; }
+  }
+	 PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SPI2;
+  PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+  {
+    Error_Handler();
   }
 }
 
@@ -309,7 +309,5 @@ static void MPU_Config(void)
   /* Enable the MPU */
   HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 }
-
-
 
 /****************************END OF FILE***************************/

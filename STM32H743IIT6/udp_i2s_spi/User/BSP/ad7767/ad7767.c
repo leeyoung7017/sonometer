@@ -1,11 +1,12 @@
 /**
-*@author leeyoung7017
-*@created	2021.12.11
-*@completed		
+*@author 	leeyoung7017
+*@data		2021.12.11
+*@Email 	leeyoung7017@163.com
 *
 */
 #include "ad7767.h"
 #include "main.h"
+#include "stdio.h"
 
 void AD7767_Init(void)
 {
@@ -13,15 +14,13 @@ void AD7767_Init(void)
 	AD7767_GPIO_Init();
 
 	/* AD7767 Reset */
-	AD7767_Reset();
+//	AD7767_Reset();
 	
 	/* DRDY EXTI Configuration */
 	AD7767_EXTI_Config();
 	
 	/* ad7767 spi Configuration */
 	AD7767_SPI_Config();
-	
-
 }
 
 
@@ -50,7 +49,7 @@ void AD7767_GPIO_Init(void)
 	GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
 	HAL_GPIO_Init(SPI3_MISO_Port, &GPIO_InitStruct);
 	
-	//SCK
+	//SCK==
 	GPIO_InitStruct.Pin = SPI3_SCK_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -117,7 +116,14 @@ void HAL_EXTI_DISABLE(uint16_t GPIO_PIN_X)
 	//外部中断失能
 	EXTI->IMR1 &= ~(GPIO_PIN_X);
 }
-SPI_HandleTypeDef hspi3;	
+
+/**
+ * @brief AD7767 SPI 配置
+ * @param  None
+ * @return None
+ */
+SPI_HandleTypeDef hspi3;
+	
 void AD7767_SPI_Config(void)
 {
 //	SPI_HandleTypeDef hspi3  = {0};
@@ -126,25 +132,28 @@ void AD7767_SPI_Config(void)
 	__HAL_RCC_SPI3_CLK_ENABLE();
 	
 	hspi3.Instance = SPI3;
+	//主机模式
 	hspi3.Init.Mode = SPI_MODE_MASTER;
+	//全双工
 	hspi3.Init.Direction = SPI_DIRECTION_2LINES;
+	//24位传输
 	hspi3.Init.DataSize = SPI_DATASIZE_24BIT;
-
 	//上升沿采集信号		时钟初始默认状态为低电平，
 	hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
+	//下降沿读取
 	hspi3.Init.CLKPhase = SPI_PHASE_2EDGE;
-
 	//软件出发片选
 	hspi3.Init.NSS = SPI_NSS_SOFT;
-	//波特率
+	//波特率：153.6MHz / 32 = 4.8M
 	hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
+	/* 波特率的系统时钟为153.6M，即外部晶振 / PLLM * PLLN /PLLQ 即 8/5*192/2=153.6M*/
 	hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
 	//中断使能
 	hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
 	//CRC校验失能
 	hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-	hspi3.Init.CRCPolynomial = 7;
-
+	hspi3.Init.CRCPolynomial = 10;
+	/* 忽略 */
 	hspi3.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
 	hspi3.Init.NSSPolarity = SPI_NSS_POLARITY_LOW;
 	hspi3.Init.FifoThreshold = SPI_FIFO_THRESHOLD_01DATA;
@@ -166,30 +175,31 @@ void AD7767_SPI_Config(void)
 
 
 /**
- * 
  * @brief 复位AD7767
+ * @param  None
+ * @return None
+ * @note 目前在ad7767的demo板上无法使用SYNC/PD引脚
  */
 void AD7767_Reset(void)
 {
 	SYNC_PD(0);
 	while(HAL_GPIO_ReadPin(DRDY_GPIO_Port,DRDY_Pin) == RESET);//等待DRDY上升沿
-	HAL_Delay_us(3);
+	HAL_Delay(3);//3ms
 	SYNC_PD(1);
-	//建立时间
-	// HAL_Delay_us(2370);
-	while(HAL_GPIO_ReadPin(DRDY_GPIO_Port,DRDY_Pin) != RESET);//等待DRDY下降沿
 }
 
 /**
  *@brief SPI MOSI 传输数据一个字节	
- * 
  *@par uint8_t 传输的一个字节的数据
- *
  *@return NULL
  */
 void SPI_Tx_Byte(uint8_t Tx)
 {
-	HAL_SPI_Transmit(&hspi3,&Tx,1,10);
+//	HAL_SPI_Transmit(&hspi3,&Tx,1,10);
+
+		uint8_t data[3] = {0};//SPI 获取三个字节数据
+	
+		HAL_SPI_Receive(&hspi3,data,3,10);
 }
 
 
@@ -197,7 +207,7 @@ uint32_t i = 0;
 /**
  * @brief 外部中断处理函数
  * 			主要处理SPI接收数据，如果DRDY引脚发生外部下降沿中断，开启数据SPI MISO接收数据
- * 
+ * 			同时，在内部还存在KEY按键的外部中断处理函数
  */
 uint32_t rx_from_ad7767[3000] = {0};
 void EXTI15_10_IRQHandler(void)
@@ -205,14 +215,12 @@ void EXTI15_10_IRQHandler(void)
 	//AD7767 DRDY 引脚外部中断，接收数据
 	if(__HAL_GPIO_EXTI_GET_IT(DRDY_Pin) != RESET)
 	{	
-		
 		uint8_t data[3] = {0};//SPI 获取三个字节数据
-		HAL_SPI_Receive(&hspi3,data,3,10);
+		HAL_SPI_Receive(&hspi3,data,1,10);
 		__HAL_GPIO_EXTI_CLEAR_IT(DRDY_EXTI_IRQn);
 		rx_from_ad7767[i] = Convert_8to24(data);
-		i++;
-		if(i == 100) i=0;
-
+//    UART_Transmit(rx_from_ad7767[i]);
+		printf("%d\n",rx_from_ad7767[i]);
 	}
 	
 	// 按键反馈 外部中断
@@ -234,9 +242,9 @@ void EXTI15_10_IRQHandler(void)
 
 
 /**
- * 
  * @brief 将8位数据的数据转化为24位数据
- * 
+ * @param pdata 需要被转换的8位数据的数组
+ * @return 返回24字节的数据
  */
 uint32_t Convert_8to24(uint8_t *pdata)
 {

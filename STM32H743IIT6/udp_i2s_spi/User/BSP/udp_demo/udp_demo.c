@@ -18,7 +18,9 @@ void Udp_Receive_Callback(void *arg,struct udp_pcb *upcb,struct pbuf *p, ip_addr
 	struct pbuf *q;
 	if(p != NULL)	//接收非空时
 	{
+		/* 数组清空 */
 		memset(udp_demo_recvbuf,'\0',UDP_DEMO_RX_BUFSIZE);
+		/* 非空数据接收，超出尺寸的数据舍去 */
 		for(q=p;q!=NULL;q=q->next)
 		{
 			if(q->len > (UDP_DEMO_RX_BUFSIZE-data_len)) 
@@ -29,40 +31,13 @@ void Udp_Receive_Callback(void *arg,struct udp_pcb *upcb,struct pbuf *p, ip_addr
 			if(data_len > UDP_DEMO_RX_BUFSIZE) 
 				break;
 		}
-		
 		/* 指示已经完成一次数据的接收 */
 		LED_ONOFF(LED(2));
-
-		if(Mode_Func_Conv() != SUCCESS)
+		/* 实现指令的解析与功能的实现 */
+		if(Instrument_Func_Conv() != SUCCESS)
 		{
 			return ;
 		}
-		
-		// /*解析ETH接收指令*/
-		// if(Instruction_Parsed_ETH() == SUCCESS)		//解析正确
-		// {
-		// 	tcp_demo_sendbuf = "OK\n";
-		// 	udp_demo_senddata(udp_demo_pcb);
-		// }
-		// else if(Instruction_Parsed_ETH() == ERROR)	//解析错误
-		// {
-		// 	tcp_demo_sendbuf = "ERR";
-		// 	udp_demo_senddata(udp_demo_pcb);
-		// }
-		// /* 定时器更新中断处理 */
-		// if(Mode_Switch == 0)//判断切换模式：标准模式	校准模式
-		// {
-		// 	Mode_Switch = 2;
-		// 	//将AD7767外部中断失能
-		// 	HAL_EXTI_DISABLE(11);
-		// 	// 标准模式下，播放音频1s
-		// 	Audio_Play(Hz_Audio,Db_Audio);
-		// }
-		// else if(Mode_Switch == 1)
-		// {
-		// 	//校准模式下操作
-		// 		HAL_EXTI_ENABLE(11);
-		// }
 		pbuf_free(p);
 	}
 	else
@@ -84,6 +59,11 @@ void udp_demo_senddata(struct udp_pcb *upcb)
 	} 
 } 
 
+/**
+ * @brief UDP 服务端初始化
+ * @param None
+ * @return None
+ */
 void UDP_Init(void)
 {
 
@@ -105,20 +85,12 @@ void UDP_Init(void)
 			{
 				/* 配置接收回调函数 */
 				udp_recv(udp_demo_pcb,(udp_recv_fn)Udp_Receive_Callback,NULL);
-				
 				/* 指示udp网口已连接 */
 				LED2(1);
 			}
-			else
-			{
-				udp_remove(udp_demo_pcb);	//删除udp控制块
-			}
+			else	udp_remove(udp_demo_pcb);	//删除udp控制块
 		}
-		else
-		{
-			udp_remove(udp_demo_pcb);	//删除udp控制块
-		}
-		
+		else	udp_remove(udp_demo_pcb);	//删除udp控制块		
 	}
 }
 
@@ -159,11 +131,8 @@ ErrorStatus Instruction_Parsed_ETH(void)
 		Mode_Switch = 1;//校准模式
 		/*************启动AD7767开启**************/
 
-	
-		
 		/****************************************/
-	}
-	
+	}	
 	return ERROR;
 }
 
@@ -174,7 +143,7 @@ ErrorStatus Instruction_Parsed_ETH(void)
  *@return 返回枚举类型，判断解析指令是否错误
  *
  */
-ErrorStatus Mode_Func_Conv(void)
+ErrorStatus Instrument_Func_Conv(void)
 {
 	/*解析ETH接收指令*/
 	if(Instruction_Parsed_ETH() == SUCCESS)		//解析正确
@@ -196,7 +165,6 @@ ErrorStatus Mode_Func_Conv(void)
 		HAL_EXTI_DISABLE(DRDY_Pin);
 		//按键外部中断使能
 		HAL_EXTI_DISABLE(KEY_CTR_Pin);
-
 		// 标准模式下，播放音频1s
 		Audio_Play(Hz_Audio,Db_Audio);
 	}

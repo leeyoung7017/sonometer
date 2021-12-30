@@ -3,10 +3,12 @@
 
 #include "stm32h7xx_hal.h"
 #include "main.h"
+#include <stdio.h>
+#include "bsp_debug_usart.h"
 #include "bsp_key.h"
 #include "./delay/core_delay.h"  
 
-#define DRDY_GPIO_Port	GPIOB
+#define DRDY_GPIO_Port	GPIOC
 #define DRDY_Pin	GPIO_PIN_14
 #define DRDY_EXTI_IRQn EXTI15_10_IRQn
 

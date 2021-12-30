@@ -2,6 +2,7 @@
 #define	__DEBUG_USART_H
 
 #include "stm32h7xx.h"
+#include "stm32h7xx_hal.h"
 #include <stdio.h>
 
 
@@ -27,11 +28,16 @@
 /************************************************************/
 
 
-//串口波特率
+//串口参数配置
 #define DEBUG_USART_BAUDRATE                    115200
+#define USART_WORDLENGTH 						USART_WORDLENGTH_8B
+#define USART_STOPBITS							USART_STOPBITS_1
+#define USART_PARITY							USART_PARITY_NONE
+#define USART_MODE								USART_MODE_TX_RX
 
 void Usart_SendString(uint8_t *str);
 void DEBUG_USART_Config(void);
+void UART_Transmit(uint32_t data);
+void USART_Transmit(uint8_t data);
 //int fputc(int ch, FILE *f);
-extern UART_HandleTypeDef UartHandle;
 #endif /* __USART1_H */
