@@ -185,7 +185,7 @@ void HAL_ETH_TxCpltCallback(ETH_HandleTypeDef *heth)
 
 void HAL_ETH_ErrorCallback(ETH_HandleTypeDef *heth)
 {
-    printf("eth err\n");
+//    printf("eth err\n");
 }
 
 

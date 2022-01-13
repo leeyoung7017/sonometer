@@ -21,6 +21,8 @@ void AD7767_Init(void)
 	
 	/* ad7767 spi Configuration */
 	AD7767_SPI_Config();
+
+	// printf("AD7767 initialization completed\r\n");
 }
 
 
@@ -60,7 +62,7 @@ void AD7767_GPIO_Init(void)
 	//CS
 	GPIO_InitStruct.Pin = SPI3_CS_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(SPI3_CS_Port, &GPIO_InitStruct);
 	CS(0);//选通信号处于低电平时，这样可以只看DRDY下降沿判断读取数据
@@ -126,8 +128,6 @@ SPI_HandleTypeDef hspi3;
 	
 void AD7767_SPI_Config(void)
 {
-//	SPI_HandleTypeDef hspi3  = {0};
-	
 	/* APB1 时钟使能  100MHz*/
 	__HAL_RCC_SPI3_CLK_ENABLE();
 	
@@ -144,9 +144,9 @@ void AD7767_SPI_Config(void)
 	hspi3.Init.CLKPhase = SPI_PHASE_2EDGE;
 	//软件出发片选
 	hspi3.Init.NSS = SPI_NSS_SOFT;
-	//波特率：153.6MHz / 32 = 4.8M
-	hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
-	/* 波特率的系统时钟为153.6M，即外部晶振 / PLLM * PLLN /PLLQ 即 8/5*192/2=153.6M*/
+	//波特率：480MHz / 64 = 7.5M
+	hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+	/* 波特率的系统时钟为153.6M，即外部晶振 / PLLM * PLLN /PLLQ 即 8/1*120/2=480M*/
 	hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
 	//中断使能
 	hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -164,7 +164,6 @@ void AD7767_SPI_Config(void)
 	hspi3.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_ENABLE;
 	hspi3.Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_DISABLE;
 	hspi3.Init.IOSwap = SPI_IO_SWAP_DISABLE;
-
 	if (HAL_SPI_Init(&hspi3) != HAL_OK)
 	{
 		Error_Handler();
@@ -188,6 +187,8 @@ void AD7767_Reset(void)
 	SYNC_PD(1);
 }
 
+
+
 /**
  *@brief SPI MOSI 传输数据一个字节	
  *@par uint8_t 传输的一个字节的数据
@@ -195,13 +196,18 @@ void AD7767_Reset(void)
  */
 void SPI_Tx_Byte(uint8_t Tx)
 {
-//	HAL_SPI_Transmit(&hspi3,&Tx,1,10);
-
-		uint8_t data[3] = {0};//SPI 获取三个字节数据
-	
-		HAL_SPI_Receive(&hspi3,data,3,10);
+	hspi3.Instance->TXDR = Tx;
 }
 
+/**
+ * @brief SPI MISO 接收数据一个字节 
+ * @param {*}
+ * @return {*}
+ */
+void SPI_Rx_Byte(uint8_t Rx)
+{
+	hspi3.Instance->RXDR = Rx;
+}
 
 uint32_t i = 0;
 /**
@@ -209,18 +215,25 @@ uint32_t i = 0;
  * 			主要处理SPI接收数据，如果DRDY引脚发生外部下降沿中断，开启数据SPI MISO接收数据
  * 			同时，在内部还存在KEY按键的外部中断处理函数
  */
-uint32_t rx_from_ad7767[3000] = {0};
+uint32_t rx_from_ad7767=0;//[3000] = {0};
 void EXTI15_10_IRQHandler(void)
 {
 	//AD7767 DRDY 引脚外部中断，接收数据
 	if(__HAL_GPIO_EXTI_GET_IT(DRDY_Pin) != RESET)
 	{	
+		static uint16_t times = 0;
 		uint8_t data[3] = {0};//SPI 获取三个字节数据
-		HAL_SPI_Receive(&hspi3,data,1,10);
-		__HAL_GPIO_EXTI_CLEAR_IT(DRDY_EXTI_IRQn);
-		rx_from_ad7767[i] = Convert_8to24(data);
-//    UART_Transmit(rx_from_ad7767[i]);
-		printf("%d\n",rx_from_ad7767[i]);
+		HAL_SPI_Receive(&hspi3,data,1,0xffff);
+		rx_from_ad7767 = Convert_8to24(data);
+		__HAL_GPIO_EXTI_CLEAR_IT(DRDY_Pin);
+		printf("%d\r\n",rx_from_ad7767);
+		times++;
+		if(times == SIZE_ACQUIRED)
+		{
+			CS(1);
+			HAL_EXTI_DISABLE(DRDY_Pin);
+			times = 0;
+		}
 	}
 	
 	// 按键反馈 外部中断
@@ -233,8 +246,7 @@ void EXTI15_10_IRQHandler(void)
 			LED2(1);
 		else
 			LED2(0);
-	/*************************/
-		
+	/*************************/	
 		__HAL_GPIO_EXTI_CLEAR_IT(KEY_CTR_Pin);
 	}
 }
@@ -249,7 +261,7 @@ void EXTI15_10_IRQHandler(void)
 uint32_t Convert_8to24(uint8_t *pdata)
 {
 	uint32_t rx = 0;
-	rx = (pdata[0]<<(8*2)) + (pdata[1]<<(8*1)) + pdata[2];
+	rx = (pdata[2]<<(8*2)) + (pdata[1]<<(8*1)) + pdata[0];
 	return rx;
 }
 

@@ -27,9 +27,9 @@ extern uint8_t ucTemp;
   */  
 void DEBUG_USART_Config(void)
 {
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+	RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
         
     /* 使能串口1时钟 GPIO时钟*/
     __HAL_RCC_USART1_CLK_ENABLE();
@@ -46,16 +46,16 @@ void DEBUG_USART_Config(void)
     
 
     /* 配置Tx引脚为复用功能  */
-    GPIO_InitStruct.Pin = DEBUG_USART_TX_PIN|DEBUG_USART_RX_PIN;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
-    HAL_GPIO_Init(DEBUG_USART_TX_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_InitStruct.Pin = DEBUG_USART_TX_PIN|DEBUG_USART_RX_PIN;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+	HAL_GPIO_Init(DEBUG_USART_TX_GPIO_PORT, &GPIO_InitStruct);
 
 		
     /* 配置串DEBUG_USART 模式 */
-	  huart1.Instance = USART1;
+	huart1.Instance = USART1;
 	huart1.Init.BaudRate = 115200;
 	huart1.Init.WordLength = UART_WORDLENGTH_8B;
 	huart1.Init.StopBits = UART_STOPBITS_1;
@@ -88,47 +88,23 @@ void DEBUG_USART_Config(void)
 
 void USART_Transmit(uint8_t data)
 {
-		huart1.Instance->TDR = data;
+	huart1.Instance->TDR = data;
 }
+
 ///重定向c库函数printf到串口DEBUG_USART，重定向后可使用printf函数
 int fputc(int ch, FILE *f)
 {
-//	/* 发送一个字节数据到串口DEBUG_USART */
-//		HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
-//		while (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_TC) == RESET);
-//		while (__HAL_USART_GET_FLAG(&husart1, USART_FLAG_TC) == RESET);
-//		HAL_USART_Transmit(&husart1, (uint8_t *)&ch, 1, 0xFFFF); 	
-		return ch;
-	
-//		while((USART1->ISR&0X40)==0);//循环发送,直到发送完毕   
-//		USART1->TDR=(uint8_t)ch;      
-//		return ch;
+	HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 1000);
+//	huart1.Instance->TDR = ch;
+//	while(__HAL_UART_GET_FLAG(&huart1,UART_FLAG_TXE)==RESET);
+	return ch;
 }
 
 ///重定向c库函数scanf到串口DEBUG_USART，重写向后可使用scanf、getchar等函数
 int fgetc(FILE *f)
-{
-		
+{	
 	int ch;
-	HAL_UART_Receive(&huart1, (uint8_t *)&ch, 1, 1000);	
+	ch = huart1.Instance->RDR;
 	return (ch);
 }
-
-
-void USART1_IRQHandler(void)
-{
-//	uint8_t data;
-	if(__HAL_UART_GET_FLAG(&huart1,UART_FLAG_RXNE)!=RESET)
-	{
-		if(__HAL_UART_GET_IT(&huart1,UART_IT_RXNE)!=RESET)
-		{
-//				data = huart1.Instance->RDR;
-				
-		}
-		__HAL_UART_CLEAR_IT(&huart1,UART_IT_RXNE);
-	}
-	
-	__HAL_UART_CLEAR_FLAG(&huart1,UART_FLAG_RXNE);
-}
-
 /*********************************************END OF FILE**********************/

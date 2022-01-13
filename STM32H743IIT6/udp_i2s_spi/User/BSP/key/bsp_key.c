@@ -1,3 +1,10 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: leeyoung7017
+ * @Date: 2021-12-11 16:13:00
+ * @Email: leeyoung7017@163.com
+ */
 #include "bsp_key.h"
 #include "ad7767.h"
 
@@ -27,6 +34,7 @@ void KEY_Init(void)
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);             //使能中断线0
 
 	// HAL_EXTI_DISABLE(GPIO_PIN_11);
+//	printf("KEY initialization completed\r\n");
 }
 
 

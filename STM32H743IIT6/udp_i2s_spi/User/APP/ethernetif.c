@@ -139,7 +139,7 @@ static void low_level_init(struct netif *netif)
   
   /* 配置以太网外设 (GPIOs, clocks, MAC, DMA)*/
   if(HAL_ETH_Init(&EthHandle) == HAL_ERROR)
-    printf("HAL_ETH_Init ERROR");
+//    printf("HAL_ETH_Init ERROR");
 
 
   /* 设置netif MAC 硬件地址长度 */

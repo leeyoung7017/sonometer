@@ -1,3 +1,10 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: leeyoung7017
+ * @Date: 2021-12-11 16:13:00
+ * @Email: leeyoung7017@163.com
+ */
 /**
   ******************************************************************
   * @file    bsp_led.c
@@ -59,6 +66,7 @@ void LED_GPIO_Config(void)
 	LED3(0);
 	LED4(0);
 
+//	printf("LED initialization completed");
 		
 }
 

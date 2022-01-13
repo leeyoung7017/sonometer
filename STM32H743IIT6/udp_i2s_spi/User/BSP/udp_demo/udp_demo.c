@@ -132,6 +132,7 @@ ErrorStatus Instruction_Parsed_ETH(void)
 		/*************启动AD7767开启**************/
 
 		/****************************************/
+		return SUCCESS;
 	}	
 	return ERROR;
 }
@@ -163,16 +164,19 @@ ErrorStatus Instrument_Func_Conv(void)
 		Mode_Switch = 2;
 		//将AD7767外部中断失能
 		HAL_EXTI_DISABLE(DRDY_Pin);
+		//AD7767 CS片选失能
+		CS_DISABLE;
 		//按键外部中断使能
 		HAL_EXTI_DISABLE(KEY_CTR_Pin);
 		// 标准模式下，播放音频1s
 		Audio_Play(Hz_Audio,Db_Audio);
 	}
-	else if(Mode_Switch == 1)
+	else if(Mode_Switch == 1)//校准模式下操作
 	{
-		//校准模式下操作
 		//AD7767 外部中断使能
 		HAL_EXTI_ENABLE(DRDY_Pin);
+		//AD7767 CS片选使能
+		CS_ENABLE;
 		//按键外部中断失能
 		HAL_EXTI_DISABLE(KEY_CTR_Pin);
 	}

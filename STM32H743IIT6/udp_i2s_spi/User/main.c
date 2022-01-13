@@ -72,6 +72,9 @@ typedef struct{
 
 CLKFreq CLK = {0};
 
+char ID_H7[12] = {
+	0x01,0xF0,0x82,0xFF,0x38,0x68,0x40,0xF0,0x80,0x70,0x38,0x60
+};
 int flag = 0;
 /**
   * @brief  主函数
@@ -80,53 +83,75 @@ int flag = 0;
   */
 int main(void)
 {
-//	uint8_t data = 0x55;
+	
+	if(!H7_encrypted())
+	{		
+		return 0;
+	}
+	
+
+	
   /* 对ETH使用的内存开启保护*/
    MPU_Config(); 
-
   /* Enable I-Cache */
   SCB_EnableICache();
-
   /* Enable D-Cache */
   SCB_EnableDCache();  
   //将Cache设置write-through方式
   SCB->CACR|=1<<2;
-
 	HAL_Init();
-  /* 配置系统时钟为480MHz */
-  SystemClock_Config();
 	
+  /* 配置系统时钟为480MHz */
+  SystemClock_Config();	
   /* 初始化RGB彩灯 */
   LED_GPIO_Config();
-
+	
+	/* 初始化USART1 配置模式为 115200 8-N-1 */
+  DEBUG_USART_Config();
+//		printf("STM32H743IIT6\r\n");
   /* 按键外部中断初始化 */
 //  KEY_Init();
 
 	/* ad7767 初始化 */
-//	AD7767_Init();
+	AD7767_Init();
 
-  /* 初始化USART1 配置模式为 115200 8-N-1 */
-  DEBUG_USART_Config();
-	
 	/* 初始化udp网口通信 */
 	udp_demo_Init();
 	
 	/* pcm1794初始化 */
-  PCM1794_Init();
-	
-	/* 配置TIM1	 120M/(120 * 5000) */
-//  TIMx_Init(12000,10000-1);
+	PCM1794_Init();
 
 
-	/* 提示网口通信已经配置完成 */
-//	LED1(1);
 	
-    while (1)
-    {  
-      /* 从以太网缓冲区中读取数据包，交给LwIP处理 */
-      udp_lwip_check();				
-    }					
+	while (1)
+	{  
+		
+		/************************* 串口测试 **************************/
+		//      USART_Transmit(data);
+		//      HAL_Delay(1);
+		/************************* 串口测试 **************************/
+
+		/* 从以太网缓冲区中读取数据包，交给LwIP处理 */
+		udp_lwip_check();				
+	}	
+	
 }
+
+char H7_encrypted(void)
+{
+	int i;	
+	char sys_id[12]={0}; //存储stm32芯片的ID号的数组
+	for(i=0;i<12;i++)
+	{
+			sys_id[i]=*(uint8_t*)(0x1FF0F420+i); //读取STM32芯片的唯一ID
+			if(sys_id[i] !=ID_H7[i])
+			{
+				return 0;
+			}
+	}
+	return 1;
+}
+
 
 /**
  * @brief  从以太网缓冲区中读取数据包，交给LwIP进行处理
@@ -153,24 +178,17 @@ void udp_lwip_check(void)
 void udp_demo_Init(void)
 {
 	/* 初始化LwIP协议栈*/
-    lwip_init();
+  lwip_init();
 	
-    printf("LAN8720A Ethernet Demo\n");
-    printf("LwIP版本: %s\n",LWIP_VERSION_STRING);
-	
-    printf("ping实验例程\n");
-	
-    printf("使用同一个局域网中的电脑ping开发板的地址，可进行测试\n");
-
-    //IP地址和端口可在main.h文件修改
-    printf("本地IP和端口: %d.%d.%d.%d\n",IP_ADDR0,IP_ADDR1,IP_ADDR2,IP_ADDR3);
-    /* 网络接口配置 */
-    Netif_Config();
+  /* 网络接口配置 */
+  Netif_Config();
     
-    User_notification(&gnetif);
+  User_notification(&gnetif);
 	
 	/* udp通信的初始化 */
 	UDP_Init();
+  //IP地址和端口可在main.h文件修改
+  // printf("本地IP和端口: %d.%d.%d.%d\r\n",IP_ADDR0,IP_ADDR1,IP_ADDR2,IP_ADDR3);
 }
 
 
@@ -186,11 +204,11 @@ void udp_demo_Init(void)
 	*            D2 APB1 Prescaler    = 2 (APB1 Clock  120MHz)
 	*            D2 APB2 Prescaler    = 2 (APB2 Clock  120MHz)
 	*            D3 APB4 Prescaler    = 2 (APB4 Clock  120MHz)
-	*            HSE Frequency(Hz)    = 25000000
-	*            PLL_M                = 5
-	*            PLL_N                = 192
+	*            HSE Frequency(Hz)    = 8000000
+	*            PLL_M                = 1
+	*            PLL_N                = 120
 	*            PLL_P                = 2
-	*            PLL_Q                = 4
+	*            PLL_Q                = 2
 	*            PLL_R                = 2
 	*            VDD(V)               = 3.3
 	*            Flash Latency(WS)    = 4
@@ -220,7 +238,8 @@ static void SystemClock_Config(void)
   RCC_OscInitStruct.CSIState = RCC_CSI_OFF;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-
+  /* HSE / PLLM * PLLN * PLLP = PLLCLK(SYSCLK) */
+  /* HSE / PLLM * PLLQ =  PLL1Q(SPI2)*/
   RCC_OscInitStruct.PLL.PLLM = 1;
   RCC_OscInitStruct.PLL.PLLN = 120;
   RCC_OscInitStruct.PLL.PLLP = 2;
@@ -235,13 +254,15 @@ static void SystemClock_Config(void)
     while(1) { ; }
   }
  
-	/* 选择PLL作为系统时钟源并配置总线时钟分频器 */
+	/* 选择PLL作为系统时钟源并配置总线时钟分频器，外设时钟分配 */
   RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK  | \
 																 RCC_CLOCKTYPE_HCLK    | \
 																 RCC_CLOCKTYPE_D1PCLK1 | \
 																 RCC_CLOCKTYPE_PCLK1   | \
                                  RCC_CLOCKTYPE_PCLK2   | \
 																 RCC_CLOCKTYPE_D3PCLK1);
+  /* SYSCLK /  SYSCLKDivider = CPU Clock*/
+  /* SYSCLK /  SYSCLKDivider / AHBCLKDivider / APB1CLKDivider = APB1_Peripheral_Clock*/
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;

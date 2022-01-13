@@ -549,11 +549,6 @@
               <FilePath>..\..\User\BSP\i2s\bsp_i2s.c</FilePath>
             </File>
             <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\BSP\timer\timer.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_key.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\BSP\key\bsp_key.c</FilePath>

@@ -142,7 +142,7 @@ void PCM1794_Init(void)
 	
 	/*I2S Initialization*/
 	I2S2_Init();
-	
+//	printf("PCM1794 initialization completed\r\n");
 }
 
 
@@ -190,8 +190,8 @@ void Audio_Play(uint32_t Hz,uint32_t Db)
 		}
   /*********************************************************************************/
   /* 音频数据传输，传输1s的数据，即为传递Hz个24位数据 */
-//	for(n = 0;n<Hz_Audio;n++)
-		while(1)
+	for(n = 0;n<Hz_Audio;n++)
+//		while(1)
 	{
 		HAL_I2S_Transmit(&I2S_HandleStructure,data_Hz_16,44000/Hz_Audio*2,HAL_MAX_DELAY);
 	}
