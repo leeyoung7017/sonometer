@@ -34,8 +34,8 @@ uint32_t Hz_Audio = 0;      //音频频率要求
 uint32_t Db_Audio = 0;      //音频幅度要求
 uint8_t Ear_Audio = 0;      //音频单声道要求    1：left     2：right
 uint8_t Mode_Switch = 2;    //标准模式与校准模式的切换；0：标准模式     1：校准模式
-
-
+uint8_t flag_ready = 0;     //准备标志位
+uint8_t flag_feedback = 0;  //反馈接收标志位
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -54,24 +54,6 @@ void Error_Handler(void)
 
 
 
-
-uint16_t data1_16[16] = {
-	0x5E00,0x805D,0x00,0x00,//0x5E00,0x805D,
-	0xBE00,0x80BA,0x00,0x00,//0xBE00,0x80BA,
-	0x1E00,0x8118,0x00,0x00,//0x1E00,0x8118,
-	0x7C00,0x8175,0x00,0x00//0x7C00,0x8175
-};
-
-typedef struct{
-	uint32_t SysCLKFreq;
-	uint32_t HCLKFreq;
-	uint32_t PCLK1Freq;
-	uint32_t PCLK2Freq;
-	uint32_t USART1Freq;
-}CLKFreq;
-
-CLKFreq CLK = {0};
-
 char ID_H7[12] = {
 	0x01,0xF0,0x82,0xFF,0x38,0x68,0x40,0xF0,0x80,0x70,0x38,0x60
 };
@@ -83,16 +65,10 @@ int flag = 0;
   */
 int main(void)
 {
-	
-	if(!H7_encrypted())
-	{		
-		return 0;
-	}
-	
-
-	
+	/* 代码加密 */
+	H7_encrypted();
   /* 对ETH使用的内存开启保护*/
-   MPU_Config(); 
+	MPU_Config(); 
   /* Enable I-Cache */
   SCB_EnableICache();
   /* Enable D-Cache */
@@ -104,11 +80,11 @@ int main(void)
   /* 配置系统时钟为480MHz */
   SystemClock_Config();	
   /* 初始化RGB彩灯 */
-  LED_GPIO_Config();
+//  LED_GPIO_Config();
 	
 	/* 初始化USART1 配置模式为 115200 8-N-1 */
   DEBUG_USART_Config();
-//		printf("STM32H743IIT6\r\n");
+	// printf("STM32H743IIT6\n");
   /* 按键外部中断初始化 */
 //  KEY_Init();
 
@@ -121,7 +97,8 @@ int main(void)
 	/* pcm1794初始化 */
 	PCM1794_Init();
 
-
+	/* 定时器初始化 */
+	TIMx_Init(1000000-1,120-1);
 	
 	while (1)
 	{  
@@ -137,7 +114,7 @@ int main(void)
 	
 }
 
-char H7_encrypted(void)
+void H7_encrypted(void)
 {
 	int i;	
 	char sys_id[12]={0}; //存储stm32芯片的ID号的数组
@@ -146,10 +123,9 @@ char H7_encrypted(void)
 			sys_id[i]=*(uint8_t*)(0x1FF0F420+i); //读取STM32芯片的唯一ID
 			if(sys_id[i] !=ID_H7[i])
 			{
-				return 0;
+				while(1);
 			}
 	}
-	return 1;
 }
 
 

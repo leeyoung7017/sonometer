@@ -568,6 +568,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\BSP\i2s\bsp_i2s_data.c</FilePath>
             </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\BSP\timer\timer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

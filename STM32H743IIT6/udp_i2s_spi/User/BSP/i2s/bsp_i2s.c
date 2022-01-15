@@ -188,6 +188,7 @@ void Audio_Play(uint32_t Hz,uint32_t Db)
 		{
 			data_Hz_16[n] = data_Hz[n];
 		}
+//    HAL_TIM_Base_Start_IT(&htimx);
   /*********************************************************************************/
   /* 音频数据传输，传输1s的数据，即为传递Hz个24位数据 */
 	for(n = 0;n<Hz_Audio;n++)

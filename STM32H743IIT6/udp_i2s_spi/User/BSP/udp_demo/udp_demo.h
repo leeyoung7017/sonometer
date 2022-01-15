@@ -18,11 +18,14 @@
 #include "string.h"
 #include "ad7767.h"
 #include "bsp_key.h"
+#include "timer.h"
 
 
 #define UDP_DEMO_RX_BUFSIZE 1500
 #define UDP_DEMO_TX_BUFSIZE 1500
 
+extern char* tcp_demo_sendbuf;
+extern struct udp_pcb *udp_demo_pcb;
 
 void udp_demo_senddata(struct udp_pcb *upcb);
 void UDP_Init(void);

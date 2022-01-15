@@ -32,6 +32,7 @@
 "..\..\output\udp_demo.o"
 "..\..\output\ad7767.o"
 "..\..\output\bsp_i2s_data.o"
+"..\..\output\timer.o"
 "..\..\output\bsp_debug_usart.o"
 "..\..\output\api_lib.o"
 "..\..\output\api_msg.o"

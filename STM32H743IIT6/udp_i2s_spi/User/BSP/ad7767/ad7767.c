@@ -65,7 +65,7 @@ void AD7767_GPIO_Init(void)
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(SPI3_CS_Port, &GPIO_InitStruct);
-	CS(0);//选通信号处于低电平时，这样可以只看DRDY下降沿判断读取数据
+	CS_DISABLE;//选通信号处于低电平时，这样可以只看DRDY下降沿判断读取数据
 
 	//SYNC_PD
 	GPIO_InitStruct.Pin = SYNC_PD_Pin;
@@ -230,7 +230,7 @@ void EXTI15_10_IRQHandler(void)
 		times++;
 		if(times == SIZE_ACQUIRED)
 		{
-			CS(1);
+			CS_DISABLE;
 			HAL_EXTI_DISABLE(DRDY_Pin);
 			times = 0;
 		}

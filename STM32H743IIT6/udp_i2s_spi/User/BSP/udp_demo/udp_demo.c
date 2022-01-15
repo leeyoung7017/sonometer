@@ -149,8 +149,7 @@ ErrorStatus Instrument_Func_Conv(void)
 	/*解析ETH接收指令*/
 	if(Instruction_Parsed_ETH() == SUCCESS)		//解析正确
 	{
-		tcp_demo_sendbuf = "OK\n";
-		udp_demo_senddata(udp_demo_pcb);
+
 	}
 	else if(Instruction_Parsed_ETH() == ERROR)	//解析错误
 	{
@@ -173,6 +172,7 @@ ErrorStatus Instrument_Func_Conv(void)
 	}
 	else if(Mode_Switch == 1)//校准模式下操作
 	{
+		HAL_TIM_Base_Stop_IT(&htimx);
 		//AD7767 外部中断使能
 		HAL_EXTI_ENABLE(DRDY_Pin);
 		//AD7767 CS片选使能

@@ -4,6 +4,7 @@
 #include "stm32h7xx.h"
 #include "stm32h7xx_hal.h"
 #include <stdio.h>
+#include "main.h"
 
 
 
@@ -35,9 +36,13 @@
 #define USART_PARITY							USART_PARITY_NONE
 #define USART_MODE								USART_MODE_TX_RX
 
+extern uint8_t RxBuffer[9];
+
 void Usart_SendString(uint8_t *str);
 void DEBUG_USART_Config(void);
 void UART_Transmit(uint32_t data);
 void USART_Transmit(uint8_t data);
+void USART1_Opera(void);
+void Page_Switch(uint16_t page);
 //int fputc(int ch, FILE *f);
 #endif /* __USART1_H */

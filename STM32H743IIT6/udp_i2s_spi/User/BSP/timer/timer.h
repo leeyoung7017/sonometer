@@ -18,6 +18,8 @@
 #define __TIMx_CLK_ENABLE()	__TIM2_CLK_ENABLE()
 #define TIMx TIM2
 
+
+extern TIM_HandleTypeDef htimx;
 void TIMx_Init(uint32_t psc,uint32_t per);
 
 

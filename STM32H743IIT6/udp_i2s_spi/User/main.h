@@ -35,8 +35,10 @@ extern uint32_t Hz_Audio;      //音频频率要求
 extern uint32_t Db_Audio;      //音频幅度要求
 extern uint8_t Ear_Audio;      //音频单声道要求    1：left     2：right
 extern uint8_t Mode_Switch;    //标准模式与校准模式的切换；0：标准模式     1：校准模式
+extern uint8_t flag_ready;  		   //准备标志位
+extern uint8_t flag_feedback;  	 //反馈接收标志位
 
-char H7_encrypted(void);
+void H7_encrypted(void);
 
 static void udp_demo_Init(void);
 void udp_lwip_check(void);

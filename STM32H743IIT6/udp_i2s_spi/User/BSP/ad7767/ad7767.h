@@ -35,8 +35,8 @@
 #define SPI3_CS_Port		GPIOB
 
 #define CS(n)		HAL_GPIO_WritePin(SPI3_CS_Port,SPI3_CS_Pin,n?GPIO_PIN_SET:GPIO_PIN_RESET)
-#define CS_ENABLE   CS(1)
-#define CS_DISABLE  CS(0)
+#define CS_ENABLE   CS(0)
+#define CS_DISABLE  CS(1)
 
 void AD7767_Init(void);
 void AD7767_GPIO_Init(void);

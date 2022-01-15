@@ -1,3 +1,10 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: leeyoung7017
+ * @Date: 2021-12-11 16:13:00
+ * @Email: leeyoung7017@163.com
+ */
 #ifndef __I2S_H__
 #define __I2S_H__
 //#include "sys.h"  
@@ -5,6 +12,7 @@
 #include "main.h"
 #include "string.h"
 #include "stdlib.h"
+#include "timer.h"
 
 
 #define I2S2_DATA_Pin GPIO_PIN_1
