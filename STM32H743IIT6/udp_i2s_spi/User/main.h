@@ -1,3 +1,10 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: leeyoung7017
+ * @Date: 2021-12-30 21:58:41
+ * @Email: leeyoung7017@163.com
+ */
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -35,8 +42,9 @@ extern uint32_t Hz_Audio;      //音频频率要求
 extern uint32_t Db_Audio;      //音频幅度要求
 extern uint8_t Ear_Audio;      //音频单声道要求    1：left     2：right
 extern uint8_t Mode_Switch;    //标准模式与校准模式的切换；0：标准模式     1：校准模式
-extern uint8_t flag_ready;  		   //准备标志位
-extern uint8_t flag_feedback;  	 //反馈接收标志位
+extern uint8_t flag_ready;     //准备标志位
+extern uint8_t flag_feedback;  //反馈接收标志位
+extern double  time = 0;              //音频播放时间
 
 void H7_encrypted(void);
 

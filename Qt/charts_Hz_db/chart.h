@@ -27,7 +27,8 @@
 #include <QTime>
 
 #define UDP_PORT_LOCAL_CHART 8080
-
+#define LENGTH_DATA 490
+extern unsigned int BufferData[LENGTH_DATA];
 QT_BEGIN_NAMESPACE
 namespace Ui { class chart; }
 using namespace QtCharts;
@@ -105,6 +106,7 @@ private:
     QAudioInput *audio_in;
     QAudioOutput *audio_out;
     QTimer *timer;
+    double time;/* 播放时间 */
 
 };
 #endif // CHART_H

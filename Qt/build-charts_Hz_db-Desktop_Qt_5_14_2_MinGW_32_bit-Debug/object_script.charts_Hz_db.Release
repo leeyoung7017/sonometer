@@ -1,0 +1,15 @@
+release/data_save.o
+release/excel.o
+release/led.o
+release/main.o
+release/chart.o
+release/pcm.o
+release/qcustomplot.o
+release/search_null.o
+release/test.o
+release/wav.o
+release/moc_chart.o
+release/moc_data_save.o
+release/moc_qcustomplot.o
+release/moc_search_null.o
+release/moc_test.o

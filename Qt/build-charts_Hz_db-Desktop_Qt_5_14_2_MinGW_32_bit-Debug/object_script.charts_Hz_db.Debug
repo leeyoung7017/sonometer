@@ -1,0 +1,15 @@
+debug/data_save.o
+debug/excel.o
+debug/led.o
+debug/main.o
+debug/chart.o
+debug/pcm.o
+debug/qcustomplot.o
+debug/search_null.o
+debug/test.o
+debug/wav.o
+debug/moc_chart.o
+debug/moc_data_save.o
+debug/moc_qcustomplot.o
+debug/moc_search_null.o
+debug/moc_test.o

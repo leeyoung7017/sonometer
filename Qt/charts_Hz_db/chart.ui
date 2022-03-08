@@ -491,7 +491,12 @@ p, li { white-space: pre-wrap; }
              </property>
              <item>
               <property name="text">
-               <string>125Hz</string>
+               <string>20Hz</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>100Hz</string>
               </property>
              </item>
              <item>
@@ -524,6 +529,16 @@ p, li { white-space: pre-wrap; }
                <string>8KHz</string>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>16KHz</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>20KHz</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="1" column="0">
@@ -535,7 +550,7 @@ p, li { white-space: pre-wrap; }
               </font>
              </property>
              <property name="text">
-              <string>测试音：</string>
+              <string>测试音强度：</string>
              </property>
             </widget>
            </item>
@@ -889,7 +904,7 @@ p, li { white-space: pre-wrap; }
            </row>
            <column>
             <property name="text">
-             <string>125Hz</string>
+             <string>20Hz</string>
             </property>
             <property name="font">
              <font>
@@ -903,6 +918,19 @@ p, li { white-space: pre-wrap; }
            <column>
             <property name="text">
              <string>250Hz</string>
+            </property>
+            <property name="font">
+             <font>
+              <family>楷体</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>100Hz</string>
             </property>
             <property name="font">
              <font>
@@ -978,7 +1006,103 @@ p, li { white-space: pre-wrap; }
              </font>
             </property>
            </column>
+           <column>
+            <property name="text">
+             <string>16KHz</string>
+            </property>
+            <property name="font">
+             <font>
+              <family>楷体</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>20KHz</string>
+            </property>
+            <property name="font">
+             <font>
+              <family>楷体</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
           </widget>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>600</y>
+            <width>121</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>楷体</family>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>准备测试</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_5">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>550</y>
+            <width>61</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>楷体</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string> 时间：</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="timeEdit">
+          <property name="geometry">
+           <rect>
+            <x>110</x>
+            <y>550</y>
+            <width>61</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>1</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>550</y>
+            <width>61</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>楷体</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>s</string>
+          </property>
          </widget>
         </widget>
        </widget>

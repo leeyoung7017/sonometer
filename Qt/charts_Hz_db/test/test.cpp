@@ -1,44 +1,509 @@
 #include "test.h"
 #include "ui_test.h"
+#include "../FFT/FFT.h"
+//#include "../FFT/fft1.h"
 
 
-static int i=0;
 
+double array_audio[N] = {
+    2.3041708,
+    2.1052168,
+    2.1020935,
+    2.1624356,
+    2.0958943,
+    2.0929126,
+    2.0980073,
+    2.0870086,
+    2.0841038,
+    2.0812475,
+    2.0783939,
+    2.0756362,
+    2.0728857,
+    2.0702646,
+    2.0676694,
+    2.0651052,
+    2.1328273,
+    2.0601470,
+    2.0578357,
+    2.0547957,
+    2.0532140,
+    2.0511019,
+    2.0490752,
+    2.0470273,
+    2.0450462,
+    2.0432081,
+    2.0413456,
+    2.0396114,
+    2.0379681,
+    2.1585239,
+    2.0349147,
+    2.0335303,
+    2.0352190,
+    2.0309244,
+    2.0297984,
+    2.0287796,
+    2.0278133,
+    2.0269104,
+    2.0261067,
+    2.2626936,
+    2.0247185,
+    2.0241901,
+    2.0238083,
+    2.0234344,
+    2.0231388,
+    2.0234598,
+    2.0229363,
+    2.0229077,
+    2.0229810,
+    2.0232167,
+    2.0235258,
+    2.0238839,
+    2.0243212,
+    2.0249281,
+    2.0255093,
+    2.0016415,
+    2.0270754,
+    2.0279903,
+    2.0307900,
+    2.0301054,
+    2.0312727,
+    2.0326089,
+    2.0338867,
+    2.0353250,
+    2.0367929,
+    2.4422958,
+    2.0400957,
+    2.0418053,
+    2.0489986,
+    2.0454679,
+    2.0474955,
+    2.0494505,
+    2.0516884,
+    2.0538137,
+    2.0560532,
+    2.0584273,
+    2.0607574,
+    2.0631940,
+    2.0958022,
+    2.0682334,
+    2.0708836,
+    2.0747788,
+    2.0762996,
+    2.0791383,
+    2.0818835,
+    2.0847857,
+    2.0877163,
+    2.0906201,
+    2.0936699,
+    2.0967613,
+    2.0997917,
+    2.1031698,
+    2.1059714,
+    2.1091346,
+    2.1128477,
+    2.1155084,
+    2.1187369,
+    2.1221692,
+    2.1252578,
+    2.1285098,
+    2.1317474,
+    2.1350675,
+    2.1383737,
+    2.1416959,
+    2.4112568,
+    2.1482843,
+    2.1515499,
+    2.1652720,
+    2.1580763,
+    2.1613332,
+    2.1648350,
+    2.1678227,
+    2.1710248,
+    2.1741816,
+    2.1773979,
+    2.1805390,
+    2.1835799,
+    2.3433449,
+    2.1896603,
+    2.1927030,
+    2.3247304,
+    2.1985489,
+    2.2014270,
+    2.2058762,
+    2.2071015,
+    2.2098091,
+    2.2124540,
+    2.2150842,
+    2.2176851,
+    2.2201515,
+    2.2225977,
+    2.2249329,
+    2.2273586,
+    2.3647877,
+    2.2317153,
+    2.2338625,
+    2.3679633,
+    2.2378902,
+    2.2398363,
+    2.4354077,
+    2.2433990,
+    2.2450982,
+    2.2466881,
+    2.2481752,
+    2.2496174,
+    2.4377390,
+    2.2521902,
+    2.2533623,
+    2.3772577,
+    2.2554770,
+    2.2564309,
+    2.2572362,
+    2.2579893,
+    2.2585842,
+    2.2592248,
+    2.2596687,
+    2.2600167,
+    2.2602763,
+    2.2605155,
+    2.2607211,
+    2.2606424,
+    2.2605898,
+    2.2604160,
+    2.2601772,
+    2.2598119,
+    2.2593860,
+    2.2588688,
+    2.2582545,
+    2.2575372,
+    2.2567245,
+    2.2558307,
+    2.2548656,
+    2.2538413,
+    2.2526723,
+    2.2515717,
+    2.2501413,
+    2.2487472,
+    2.2473067,
+    2.2456566,
+    2.2440649,
+    2.2424158,
+    2.2404980,
+    2.2386471,
+    2.2367015,
+    2.2346463,
+    2.2325396,
+    2.2304493,
+    2.2281973,
+    2.2258490,
+    2.2235381,
+    2.2210676,
+    2.2185963,
+    2.2160384,
+    2.3567217,
+    2.2107562,
+    2.2080609,
+    2.3526638,
+    2.2025395,
+    2.1997112,
+    2.1967634,
+    2.1938236,
+    2.1908563,
+    2.1878059,
+    2.1847803,
+    2.1817193,
+    2.1784994,
+    2.1754319,
+    2.1722207,
+    2.1689954,
+    2.1658249,
+    2.1626468,
+    2.3296688,
+    2.1560691,
+    2.1528039,
+    2.1494477,
+    2.1462064,
+    2.1429441,
+    2.4098953,
+    2.1362969,
+    2.1330423,
+    2.3148687,
+    2.1264843,
+    2.1232233,
+    2.4049875,
+    2.1167495,
+    2.1134983,
+    2.1103166,
+    2.1071565,
+    2.1040506,
+    2.3004147,
+    2.0978023,
+    2.0947344,
+    2.0917613,
+    2.0888219,
+    2.0859213,
+    2.0829926,
+    2.0801389,
+    2.0773634,
+    2.3936572,
+    2.0718786,
+    2.0692813,
+    2.0958337,
+    2.0641207,
+    2.0616771,
+    2.1599544,
+    2.0568834,
+    2.0546525,
+    2.1315602,
+    2.0502544,
+    2.0482304,
+    2.0632225,
+    2.0442873,
+    2.0424680,
+    2.1587926,
+    2.0390273,
+    2.0373563,
+    2.0630599,
+    2.0344020,
+    2.0330424,
+    2.0391865,
+    2.0305249,
+    2.0293700,
+    2.0283479,
+    2.0274071,
+    2.0265658,
+    2.0258185,
+    2.0250996,
+    2.0244704,
+    2.0240329,
+    2.0235881,
+    2.0232726,
+    2.0230655,
+    2.0229591,
+    2.0228941,
+    2.0229224,
+    2.0230564,
+    2.0233030,
+    2.0235866,
+    2.0240244,
+    2.0245064,
+    2.0251064,
+    2.0257851,
+    2.0266282,
+    2.0274113,
+    2.1285463,
+    2.0294110,
+    2.0305736,
+    2.0947408,
+    2.0330500,
+    2.0344576,
+    2.1021233,
+    2.0373906,
+    2.0390142,
+    2.1731492,
+    2.0425207,
+    2.0443426,
+    2.3865872,
+    2.0482766,
+    2.0503936,
+    2.2762328,
+    2.0546670,
+    2.0569910,
+    2.1599595,
+    2.0617744,
+    2.0641367,
+    2.3916922,
+    2.0693549,
+    2.0719803,
+    2.3936748,
+    2.0774048,
+    2.0801965,
+    2.1353839,
+    2.0859804,
+    2.0888625,
+    2.3979651,
+    2.0948277,
+    2.0979262,
+    2.0969066,
+    2.1040867,
+    2.1072770,
+    2.1258626,
+    2.1136228,
+    2.1168456,
+    2.1212109,
+    2.1233253,
+    2.1265593,
+    2.1372258,
+    2.1331204,
+    2.1364207,
+    2.1407613,
+    2.1429894,
+    2.1462954,
+    2.1568344,
+    2.1529065,
+    2.1562148,
+    2.1653079,
+    2.1627171,
+    2.1659423,
+    2.1849152,
+    2.1723587,
+    2.1754966,
+    2.1824787,
+    2.1817345,
+    2.1848520,
+    2.1960465,
+    2.1909897,
+    2.1939803,
+    2.1960814,
+    2.1997509,
+    2.2026248,
+    2.2058805,
+    2.2081901,
+    2.2108818,
+    2.2140756,
+    2.2161240,
+    2.2186143,
+    2.2215434,
+    2.2236064,
+    2.2259663,
+    2.2283270,
+    2.2304894,
+    2.2326061,
+    2.2347697,
+    2.2367253,
+    2.2386790,
+    2.2405925,
+    2.2423140,
+    2.2440414,
+    2.2457464,
+    2.2472448,
+    2.2487953,
+    2.2501735,
+    2.2515006,
+    2.2526560,
+    2.2538718,
+    2.2549068,
+    2.2558934,
+    2.2568437,
+    2.2575269,
+    2.2582466,
+    2.2588521,
+    2.2594335,
+    2.2598373,
+    2.2602006,
+    2.2604487,
+    2.2605739,
+    2.2607128,
+    2.2606684,
+    2.2605435,
+    2.2603532,
+    2.2600494,
+    2.2596359,
+    2.2592015,
+    2.2585840,
+    2.2579202,
+    2.2572177,
+    2.2563996,
+    2.2554636,
+    2.2545786,
+    2.2533553,
+    2.2521583,
+    2.2548863,
+    2.2496049,
+    2.2481030,
+    2.2471906,
+    2.2449851,
+    2.2434210,
+    2.2417896,
+    2.2397644,
+    2.2378598,
+    2.2361990,
+    2.2338370,
+    2.231711,
+    2.2295811,
+    2.2272609,
+    2.2249120,
+    2.2228664,
+    2.2200848,
+    2.2175838,
+    2.2151009,
+    2.2123794,
+    2.2097432,
+    2.2070221,
+    2.2041864,
+    2.2013875,
+    2.1985533,
+    2.1955634,
+    2.1926334,
+    2.1896314,
+    2.1865254,
+    2.1835128,
+    2.1804614,
+    2.1772871,
+    2.1741442,
+    2.1710154,
+    2.1677315,
+    2.1645109,
+    2.1612821,
+    2.1579948,
+    2.1547229,
+    2.1514265,
+    2.1481271,
+    2.1449293,
+    2.1415300,
+    2.1382810,
+    2.1349647,
+    2.1316894,
+    2.1283680,
+    2.1251153,
+    2.1219082,
+    2.1187119,
+    2.1154101,
+    2.1122284,
+    2.1089725,
+    2.1058440,
+    2.1027822,
+    2.0995928,
+    2.0965865,
+    2.0935328,
+    2.0905414,
+    2.0876224,
+    2.0846685,
+    2.0818111,
+    2.0789612,
+    2.0761910,
+    2.0734547,
+    2.0708340,
+    2.0681987,
+    2.3914036,
+    2.0631314,
+    2.0607168,
+    2.3895710,
+    2.0559886,
+    2.0537687,
+    2.3878940,
+    2.0494276,
+    2.0474068,
+    2.1306771,
+    2.0435215,
+    2.0417265,
+    2.1587468,
+    2.0383016,
+    2.0367594,
+    2.3838037,
+    2.0337882,
+    2.0324809,
+    2.2655934,
+    2.0300066,
+    2.0289286,
+    2.0279634
+};
 test::test(QWidget *parent) :
-    QMainWindow(parent),
+    QWidget(parent),
     ui(new Ui::test)
 {
     ui->setupUi(this);
-
-
-
-    /*将表格放置QChartView中显示出来*/
-    /*在这里需要使用控件 Graphics View 将其提升为 QtCharts::QChartView 后，直接调用即可*/
-    ui->chart_view->setChart(chart);
-    ui->chart_ret_view->setChart(chart_ret);
-
-    /*坐标轴配置*/
-    axis_chart(chart,series);
-    axis_chart(chart_ret,series_ret);
-    /*表格抬头配置*/
-    QFont *title_font = new QFont();
-    title_font->setFamily("楷体");
-    chart->setTitle("原始数据");
-    chart->setTitleFont(*title_font);
-    chart_ret->setTitle("返回数据");
-    chart_ret->setTitleFont(*title_font);
-
-    /*点数据的添加*/
-
-    chart_ret->addSeries(series_ret);
-
-    /*UDP网口对象*/
-    my_udpsocket_tx = new QUdpSocket(this);
-    my_udpsocket_rx = new QUdpSocket(this);
-    my_udpsocket_rx->bind(QHostAddress::Any,UDP_PORT_LOCAL_TEST);
-
-    /*UDP接收信号与槽函数的关联*/
-    connect(my_udpsocket_rx,&QUdpSocket::readyRead,this,&test::receiveData);
+    QCustomplot_Init(ui->widgetFFT,500,100);
+    ui->widgetFFT->setVisible(true);
 }
 
 test::~test()
@@ -46,135 +511,142 @@ test::~test()
     delete ui;
 }
 
-void test::axis_chart(QChart* chart,QSplineSeries *series)
+/* 坐标系配置 */
+void test::QCustomplot_Init(QCustomPlot *widget,int x_range,int y_range)
 {
-    chart->legend()->hide();
 
-    /*表格背景*/
-    chart->setTheme(QChart::ChartThemeDark);
+    //设置坐标尺寸
+    widget->addGraph();
+    //设置X轴、Y轴范围
+    widget->xAxis->setRange(0, x_range);
+    widget->yAxis->setRange(0, y_range);
 
-    /*坐标轴对象定义*/
-    QValueAxis *chart_axisY = new QValueAxis();
-    QValueAxis *chart_axisX = new QValueAxis();
-
-
-    /*X轴*/
-    chart_axisX->setRange(0,300);
-    chart_axisX->setTickCount(15);
-    chart_axisX->setGridLineVisible(true);
-    chart_axisX->setTitleText("DbHL");
-    chart_axisX->setLabelFormat("%d");
-    /*Y轴*/
-    chart_axisY->setRange(-128,128);
-    chart_axisY->setTickCount(17);
-    chart_axisY->setGridLineVisible(true);
-    chart_axisY->setTitleText("time");
-    chart_axisY->setLabelFormat("%d");
-
-
-    /*字体配置*/
-    QFont *font = new QFont();
-    font->setFamily("楷体");
-    font->setPixelSize(10);
-    chart_axisX->setLabelsFont(*font);
-    chart_axisY->setLabelsFont(*font);
-    /*坐标轴的位置*/
-    chart->addAxis(chart_axisX,Qt::AlignBottom);
-    chart->addAxis(chart_axisY,Qt::AlignLeft);
-    chart->addSeries(series);
-    series->attachAxis(chart_axisX);
-    series->attachAxis(chart_axisY);
-
+    /* 设置坐标系缩放，坐标轴缩放 */
+    widget->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+    /* 设置曲线类型 */
+    widget->graph(0)->setLineStyle((QCPGraph::LineStyle)1);
 
 }
 
-/*删除曲线*/
-void test::delete_series(QSplineSeries *series)
+void test::on_ButtonDisplayFFT_clicked()
 {
-    series->clear();
+
+//    ui->widgetData->setHidden(false);
+//    ui->widgetFFT->setHidden(true);
+//    ui->widgetData->setVisible(false);
+//    ui->widgetFFT->setVisible(true);
+    QVector<double> XData,YData;
+    int d_size[1] = { N };
+    int F_size[1] = { N };
+    double THD = 0;
+    double FreqDeviation = 0;
+    double SNR = 0;
+    double SPL = 0;
+    FFT(array_audio, d_size, F, F_size);
+    F[0] = 0;
+    for(int i=0;i<LENGTH_DATA;i++)
+    {
+        XData.append(i);
+  //      YData.append(BufferData[i]);
+        YData.append(F[i]);
+    }
+    ui->widgetFFT->graph(0)->setName("快速傅立叶变换");
+    ui->widgetFFT->graph(0)->setData(XData,YData);
+    ui->widgetFFT->rescaleAxes();
+    ui->widgetFFT->replot();
+
+    THD = GetTHD(F,6);
+    ui->THDEdit->setText(QString::number(THD));
+
+    FreqDeviation = GetFreqDeviation(F);
+    ui->FreqEdit->setText(QString::number(FreqDeviation));
+
+
+    ui->SNREdit->setText(QString::number(SNR));
+
+    SPL = GetSPL(array_audio);
+    ui->SPLEdit->setText(QString::number(SPL));
+
 }
 
-
-/*传递数据*/
-void test::on_data_button_clicked()
+/* 总谐波失真度获取 */
+double test::GetTHD(double F_data[N],int NumHarmonic)
 {
+    double n = FreqStandard*N/Sample;
+    double d_Harmonic2 = 0;
+    double d_base = 0;
+    double THD = 0;
+    for(int i = 0;i<NumHarmonic-1;i++)
+    {
+        if(i == 0) d_base = F_data[int(n)];
+        else d_Harmonic2 += F_data[int(n*(i+1))]*F_data[int(n*(i+1))];
+    }
+    THD = 100* (sqrt(d_Harmonic2))/d_base;
+    return THD;
+}
 
-    /*读取pcm文件数据*/
-    QByteArray arr = pcm_read("C:\\Users\\Administrator\\Documents\\1k_24_4M8.pcm");
+double test::GetSPL(double* data)
+{
+    double sum = 0;
+    double pa = 0;
+    double p0 = 2e-5;
+    double spl = 0;
+    for(int i=0;i<N;i++)
+    {
+        sum += data[i]*data[i];
+    }
+    pa = sqrt(sum/N);
+    spl = 20*log10(pa/p0);
+    return spl;
+}
 
-//        QList<int> data;
-        for(int i = 0; i<160;i++)
+double test::GetFreqDeviation(double F_data[N])
+{
+    double max = 0;
+    double index = 0;
+    double freq_real = 0;
+    double FreqDeviation = 0;
+    for(int i=0;i<N;i++)
+    {
+        if(F_data[i]>max)
         {
-//            data[i] = arr.at(i);
-//            if(data.at(i)>128)
-//            {
-//                data[i] = data.at(i) - 256;
-//            }
-
-            /*整型转字符串*//*一个数据一个数据十进制的传输*/
-            //arr = QString::number(data.at(i),10);
-
-
-            /*将字符串数据传输到UDP服务端*/
-            my_udpsocket_tx->writeDatagram(QString::number(arr.at(i),10).toUtf8()  +" ",QHostAddress("192.168.137.1"),8080);
-//            series->setPointsVisible(true);
-
-            series->append(i,arr.at(i));
+            max = F_data[i];
+            index = i;
         }
+        if(index > N/2) index = N - index;
 
-
-
+    }
+    freq_real = Sample*index/N;
+    FreqDeviation = 100*(fabs(freq_real - FreqStandard)) /freq_real;
+    return FreqDeviation;
 }
 
-/*接收数据*/
-/*
- * 接收的数据分为两个部分：
- *                      1.数据来自仿真耳
- *                      2.数据来自测试耳机
- * 其中两者的数据都是通过在相同的环境下，不同时间采用同一ADC获取的数据，因此具有可比性，查看数据的误差，对数据进行检测，可以检测设备的误差与好坏
-*/
-void test::receiveData()
-{
+void test::on_ButtonDisplayData_clicked()
+{    
 
-/*获取字符串*/
-    QByteArray datagram;
+//    QVector<double> XData,YData;
+//    for(int i=0;i<LENGTH_DATA;i++)
+//    {
+//        XData.append(i);
+//  //      YData.append(BufferData[i]);
+//        YData.append((array_audio[i]-2)*50);
+//    }
+//    ui->widgetData->graph(0)->setData(XData,YData);
+//    ui->widgetData->rescaleAxes();
+//    ui->widgetData->replot();
 
-    while (my_udpsocket_rx->hasPendingDatagrams())
-       {
-
-            datagram.resize(my_udpsocket_rx->pendingDatagramSize());
-        /*UDP服务端的IP地址和端口号*/
-            QHostAddress sender;
-            quint16 senderPort;
-        /*接收服务端的数据*/
-            my_udpsocket_rx->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-        /*datagram  为数据存储的内容*/
-
-         }
-    /*点使能显示*/
-    series_ret->setPointsVisible(true);
-    series->setPointsVisible(true);
-    if(ui->Audio_Standard->isChecked())
+    QVector<double> XData,YData;
+    for(int i=0;i<LENGTH_DATA;i++)
     {
-        series_ret->append(i,datagram.toInt());
+        XData.append(i);
+  //      YData.append(BufferData[i]);
+        YData.append((array_audio[i]-2)*50);
     }
-    else
-    {
-        series->append(i,datagram.toInt());
-    }
-
-    i++;
+    ui->widgetFFT->graph(0)->setName("实时数据");
+    ui->widgetFFT->graph(0)->setData(XData,YData);
+    ui->widgetFFT->rescaleAxes();
+    ui->widgetFFT->replot();
 }
 
-void test::on_clear_clicked()
-{
-    i=0;
-    if(ui->Audio_Standard->isChecked())
-    {
-        delete_series(series_ret);
-    }
-    else
-    {
-        delete_series(series);
-    }
-}
+
+

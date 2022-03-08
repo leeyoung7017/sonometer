@@ -45,7 +45,9 @@ chart::chart(QWidget *parent)
     ui->Db->setRange(-10,120);
     ui->Db->setSingleStep(10);
 
-
+    time = ui->timeEdit->text().toDouble();
+    printf("time = %f\n",time);
+    fflush(stdout);
     /*LED*/
     led_init(ui->led,GRAY,14);
 
@@ -53,6 +55,7 @@ chart::chart(QWidget *parent)
 //    ui->search_add_information_test->addTab(ui->search_Widget,"查找");
 //    ui->search_add_information_test->addTab(ui->check_2,"添加信息");
 //    ui->search_add_information_test->addTab(ui->test,"测试");
+
 
     /*给表格table的表头加背景*/
     ui->information_table->horizontalHeader()->setStyleSheet("QHeaderView::section{background:gray;}");
@@ -234,27 +237,31 @@ void chart::on_clear_clicked()
 int chart::on_test_botton_clicked()
 {
     QByteArray data0;
-    wavctrl wav;
+//    wavctrl wav;
     QByteArray audio_wav;
+    QString str;
 
 //    audio_wav = wav_decode_init("C:\\Users\\Administrator\\Documents\\"+ui->Hz->currentText()+".wav",&wav);
 //    for(int i=0;i<wav.datasize;i++)
 //    {
 //        data0.append(audio_wav.at(wav.datastart+i));
 //    }
-
+    time = ui->timeEdit->text().toDouble();
+//    str = str.asprintf("%f",time);
+    printf("time = %f\n",time);
+    fflush(stdout);
     data0.append(1-1);
 
     data0.append('H');
     data0.append('Z');
     switch (ui->Hz->currentIndex()) {
         case 0:
-            data0.append((125>>8)&0xff);//1*125
-            data0.append((125)&0xff);//1*125
+            data0.append((20>>8)&0xff);//1*125
+            data0.append((20)&0xff);//1*125
             break;
         case 1:
-            data0.append((250>>8)&0xff);//1*125
-            data0.append((250)&0xff);//1*125
+            data0.append((100>>8)&0xff);//1*125
+            data0.append((100)&0xff);//1*125
             break;
         case 2:
             data0.append((500>>8)&0xff);//1*125
@@ -276,6 +283,14 @@ int chart::on_test_botton_clicked()
             data0.append((8000>>8)&0xff);//1*125
             data0.append((8000)&0xff);//1*125
             break;
+        case 7:
+            data0.append((16000>>8)&0xff);//1*125
+            data0.append((16000)&0xff);//1*125
+            break;
+        case 8:
+            data0.append((20000>>8)&0xff);//1*125
+            data0.append((20000)&0xff);//1*125
+            break;
         default:
             break;
     }
@@ -285,6 +300,11 @@ int chart::on_test_botton_clicked()
     data0.append((ui->Db->value()>>8)&0xff);
     data0.append((ui->Db->value())&0xff);
     data0.append(ui->ear_choose->currentIndex()+1);
+    data0.append('T');
+    data0.append('I');
+    data0.append('M');
+    data0.append('E');
+    data0.append(time);
 
     //传输数据
     my_UdpSocket_Rx->writeDatagram(data0,QHostAddress("192.168.1.30"),UDP_PORT_LOCAL_CHART);
@@ -385,6 +405,7 @@ void chart::on_clear_botton_clicked()
     clear_point_ears();
 }
 
+unsigned int BufferData[LENGTH_DATA] ={0};
 /*网口通信接收数据*/
 int chart::ClientReadData()
 {
@@ -419,6 +440,14 @@ int chart::ClientReadData()
             //如果传回反应
             led_init(ui->led,GREEN,14);
             return 0;
+        }
+        else if(buffer_arr.at(0) == 'd' && buffer_arr.at(1) == 'a' && buffer_arr.at(2) == 't' && buffer_arr.at(3) == 'a')
+        {
+            /* 判断是否是采集的数据*/
+            for(int i=0;i<LENGTH_DATA;i++)
+            {
+                BufferData[i] = (buffer_arr.at(4+i*3)<<16) + (buffer_arr.at(5+i*3)<<8) + buffer_arr.at(6+i*3);
+            }
         }
         else
         {

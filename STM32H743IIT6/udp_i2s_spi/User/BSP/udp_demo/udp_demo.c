@@ -12,6 +12,7 @@ char udp_demo_recvbuf[UDP_DEMO_RX_BUFSIZE];
 char udp_demo_sendbuf[UDP_DEMO_TX_BUFSIZE];
 char* tcp_demo_sendbuf = "OK\n";
 
+
 void Udp_Receive_Callback(void *arg,struct udp_pcb *upcb,struct pbuf *p, ip_addr_t *addr,uint16_t port) 
 {
 	uint32_t data_len = 0;
@@ -115,7 +116,11 @@ ErrorStatus Instruction_Parsed_ETH(void)
 				if(udp_demo_recvbuf[9] != 0)	//“Ù∆µµ•…˘µ¿≤‚ ‘
 				{
 					Ear_Audio = udp_demo_recvbuf[9];
-					return SUCCESS;
+					if(udp_demo_recvbuf[10] == 'T' && udp_demo_recvbuf[11] == 'I' && udp_demo_recvbuf[12] == 'M' && udp_demo_recvbuf[13] == 'E' )
+					{
+						time = udp_demo_recvbuf[14];
+						return SUCCESS;
+					}
 				}
 			}
 		}

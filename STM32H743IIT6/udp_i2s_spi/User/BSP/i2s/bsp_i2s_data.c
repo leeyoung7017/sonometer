@@ -6,6 +6,7 @@ void Convert24To16(uint32_t* data_array,int length)
     int i = 0;
     for(i = 0;i<length;i=i+4)//Ä¬ÈÏ×óÉùµÀ
     {
+        
        data_array[i+1] = (data_array[i]>>8) & 0xffff;
        data_array[i] = (data_array[i] << 8) & 0xffff;
        data_array[i+2] = 0x00;

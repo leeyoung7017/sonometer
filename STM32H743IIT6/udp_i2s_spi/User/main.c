@@ -36,7 +36,7 @@ uint8_t Ear_Audio = 0;      //音频单声道要求    1：left     2：right
 uint8_t Mode_Switch = 2;    //标准模式与校准模式的切换；0：标准模式     1：校准模式
 uint8_t flag_ready = 0;     //准备标志位
 uint8_t flag_feedback = 0;  //反馈接收标志位
-
+double  time = 0;           //音频播放时间
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None

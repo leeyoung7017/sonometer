@@ -173,7 +173,7 @@ void Audio_Play(uint32_t Hz,uint32_t Db)
     {
         if(i % n == 0)
         {
-          data_Hz[index*4] = data_audio_20Hz[i];
+          data_Hz[index*4] = data_audio_20Hz[i];/* 需要对音频数据进行DB音量控制 */
           index++;
         }
     }
@@ -190,8 +190,8 @@ void Audio_Play(uint32_t Hz,uint32_t Db)
 		}
 //    HAL_TIM_Base_Start_IT(&htimx);
   /*********************************************************************************/
-  /* 音频数据传输，传输1s的数据，即为传递Hz个24位数据 */
-	for(n = 0;n<Hz_Audio;n++)
+  /* 音频数据传输，传输time时间的数据，即为传递Hz_Audio*time个24位数据 */
+	for(n = 0;n<Hz_Audio*time;n++)
 //		while(1)
 	{
 		HAL_I2S_Transmit(&I2S_HandleStructure,data_Hz_16,44000/Hz_Audio*2,HAL_MAX_DELAY);
