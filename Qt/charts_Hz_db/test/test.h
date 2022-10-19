@@ -14,9 +14,9 @@ namespace Ui {
 class test;
 }
 
-#define N 490
-#define Sample  128000
-#define FreqStandard 1000
+#define N 512   //采样点数
+#define Sample  512//128000 //采样率
+#define FreqStandard 100//1000  //音频频率
 
 class test : public QWidget
 {
@@ -26,9 +26,11 @@ public:
     explicit test(QWidget *parent = nullptr);
     ~test();
     void QCustomplot_Init(QCustomPlot *widget, int x_range, int y_range);
-    double GetTHD(double F_data[N], int NumHarmonic);
-    double GetFreqDeviation(double F_data[N]);
+    double GetTHD(double F_data[N], int realFreq, int NumHarmonic);
+    double *GetFreqDeviation(double F_data[N]);
     double GetSPL(double *data);
+    double GetSNR(double data[N],double data_standard[N]);
+
 private slots:
     void on_ButtonDisplayFFT_clicked();
 

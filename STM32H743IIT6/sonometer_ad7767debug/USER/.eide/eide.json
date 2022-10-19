@@ -1,0 +1,517 @@
+{
+  "name": "NETWORK",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [
+    ".eide/deps"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": [
+      {
+        "name": "CORE",
+        "files": [
+          {
+            "path": "../CORE/core_cm7.h"
+          },
+          {
+            "path": "../CORE/cmsis_armcc.h"
+          },
+          {
+            "path": "../CORE/cmsis_compiler.h"
+          },
+          {
+            "path": "../CORE/startup_stm32h743xx.s"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "HALLIB",
+        "files": [
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c"
+          },
+          {
+            "path": "../HALLIB/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "HARDWARE",
+        "files": [
+          {
+            "path": "../HARDWARE/AD7767/ad7767.c"
+          },
+          {
+            "path": "../HARDWARE/I2S/bsp_i2s_data.c"
+          },
+          {
+            "path": "../HARDWARE/I2S/bsp_i2s.c"
+          },
+          {
+            "path": "../HARDWARE/IIC/myiic.c"
+          },
+          {
+            "path": "../HARDWARE/LAN8720/lan8720.c"
+          },
+          {
+            "path": "../HARDWARE/LED/led.c"
+          },
+          {
+            "path": "../HARDWARE/MPU/mpu.c"
+          },
+          {
+            "path": "../HARDWARE/PCF8574/pcf8574.c"
+          },
+          {
+            "path": "../HARDWARE/SDRAM/sdram.c"
+          },
+          {
+            "path": "../HARDWARE/TIMER/timer.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "LWIP_API",
+        "files": [
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/api_lib.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/api_msg.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/err.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/netbuf.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/netdb.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/netifapi.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/sockets.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/api/tcpip.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "LWIP_APP",
+        "files": [
+          {
+            "path": "../LWIP/lwip_app/lwip_comm/lwip_comm.c"
+          },
+          {
+            "path": "../LWIP/lwip_app/udp_demo/udp_demo.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "LWIP_ARCH",
+        "files": [
+          {
+            "path": "../LWIP/arch/sys_arch.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "LWIP_CORE",
+        "files": [
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/autoip.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/icmp.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/igmp.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/inet.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/inet_chksum.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/ip.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/ip_addr.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/ipv4/ip_frag.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/def.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/dhcp.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/dns.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/init.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/lwip_sys.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/mem.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/memp.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/netif.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/pbuf.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/raw.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/stats.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/tcp.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/tcp_in.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/tcp_out.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/timers.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/core/udp.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "LWIP_NETIF",
+        "files": [
+          {
+            "path": "../LWIP/lwip-1.4.1/src/netif/etharp.c"
+          },
+          {
+            "path": "../LWIP/lwip-1.4.1/src/netif/ethernetif.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "MALLOC",
+        "files": [
+          {
+            "path": "../MALLOC/malloc.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "README",
+        "files": [],
+        "folders": []
+      },
+      {
+        "name": "SYSTEM",
+        "files": [
+          {
+            "path": "../SYSTEM/delay/delay.c"
+          },
+          {
+            "path": "../SYSTEM/sys/sys.c"
+          },
+          {
+            "path": "../SYSTEM/usart/usart.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "USER",
+        "files": [
+          {
+            "path": "main.c"
+          },
+          {
+            "path": "stm32h7xx_hal_msp.c"
+          },
+          {
+            "path": "stm32h7xx_it.c"
+          },
+          {
+            "path": "system_stm32h7xx.c"
+          }
+        ],
+        "folders": []
+      }
+    ]
+  },
+  "outDir": "build",
+  "deviceName": null,
+  "packDir": null,
+  "miscInfo": {
+    "uid": "c945fd6c8b240eeedec6cdd134b079d2"
+  },
+  "targets": {
+    "NETWORK": {
+      "excludeList": [],
+      "toolchain": "AC5",
+      "compileConfig": {
+        "cpuType": "Cortex-M7",
+        "floatingPointHardware": "double",
+        "scatterFilePath": "<YOUR_LINKER_SCRIPT>.lds",
+        "useCustomScatterFile": false,
+        "storageLayout": {
+          "RAM": [
+            {
+              "tag": "RAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x20000000",
+                "size": "0x20000"
+              },
+              "isChecked": true,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x24000000",
+                "size": "0x80000"
+              },
+              "isChecked": true,
+              "noInit": false
+            }
+          ],
+          "ROM": [
+            {
+              "tag": "ROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "IROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x8000000",
+                "size": "0x200000"
+              },
+              "isChecked": true,
+              "isStartup": true
+            },
+            {
+              "tag": "IROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            }
+          ]
+        },
+        "options": "null"
+      },
+      "uploader": "JLink",
+      "uploadConfig": {
+        "bin": "",
+        "baseAddr": "",
+        "cpuInfo": {
+          "vendor": "null",
+          "cpuName": "null"
+        },
+        "proType": 1,
+        "speed": 8000,
+        "otherCmds": ""
+      },
+      "uploadConfigMap": {},
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          "../CORE",
+          ".",
+          "../SYSTEM/delay",
+          "../SYSTEM/sys",
+          "../SYSTEM/usart",
+          "../USMART",
+          "../HALLIB/STM32H7xx_HAL_Driver/Inc",
+          "../MALLOC",
+          "../HARDWARE/LED",
+          "../HARDWARE/KEY",
+          "../HARDWARE/LCD",
+          "../HARDWARE/SDRAM",
+          "../HARDWARE/24CXX",
+          "../HARDWARE/LAN8720",
+          "../HARDWARE/IIC",
+          "../HARDWARE/PCF8574",
+          "../HARDWARE/TIMER",
+          "../HARDWARE/MPU",
+          "../HARDWARE/ADC",
+          "../HARDWARE/RTC",
+          "../LWIP",
+          "../LWIP/arch",
+          "../LWIP/lwip-1.4.1/src/include",
+          "../LWIP/lwip-1.4.1/src/include/ipv4",
+          "../LWIP/lwip-1.4.1/src/include/netif",
+          "../LWIP/lwip_app/lwip_comm",
+          "../LWIP/lwip_app/tcp_server_demo",
+          "../LWIP/lwip_app/tcp_client_demo",
+          "../LWIP/lwip_app/udp_demo",
+          "../LWIP/lwip_app/web_server_demo",
+          "../HARDWARE/AD7767",
+          "../HARDWARE/I2S",
+          "../HARDWARE/AUDIO",
+          "../HARDWARE/WM8978",
+          "RTE/_NETWORK",
+          ".eide/deps"
+        ],
+        "libList": [],
+        "sourceDirList": [],
+        "defineList": [
+          "USE_HAL_DRIVER",
+          "STM32H743xx"
+        ]
+      }
+    }
+  },
+  "version": "3.3"
+}

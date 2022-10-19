@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../data_save/data_save.h"
+#include "../../../../../../sonometer/Qt/charts_Hz_db/data_save/data_save.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)

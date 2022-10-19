@@ -282,8 +282,8 @@
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>404</width>
-            <height>255</height>
+            <width>430</width>
+            <height>261</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -461,8 +461,8 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>60</x>
             <y>430</y>
-            <width>294</width>
-            <height>117</height>
+            <width>320</width>
+            <height>131</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
@@ -1039,7 +1039,7 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>150</x>
             <y>600</y>
-            <width>121</width>
+            <width>161</width>
             <height>51</height>
            </rect>
           </property>
@@ -1057,7 +1057,7 @@ p, li { white-space: pre-wrap; }
           <property name="geometry">
            <rect>
             <x>50</x>
-            <y>550</y>
+            <y>570</y>
             <width>61</width>
             <height>21</height>
            </rect>
@@ -1076,7 +1076,7 @@ p, li { white-space: pre-wrap; }
           <property name="geometry">
            <rect>
             <x>110</x>
-            <y>550</y>
+            <y>570</y>
             <width>61</width>
             <height>20</height>
            </rect>
@@ -1089,7 +1089,7 @@ p, li { white-space: pre-wrap; }
           <property name="geometry">
            <rect>
             <x>180</x>
-            <y>550</y>
+            <y>570</y>
             <width>61</width>
             <height>21</height>
            </rect>
@@ -1125,6 +1125,7 @@ p, li { white-space: pre-wrap; }
    <class>QtCharts::QChartView</class>
    <extends>QGraphicsView</extends>
    <header location="global">qchartview.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

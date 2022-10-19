@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../qcustomplot/qcustomplot.h"
+#include "../../../../../../sonometer/Qt/charts_Hz_db/qcustomplot/qcustomplot.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #include <QtCore/QSharedPointer>

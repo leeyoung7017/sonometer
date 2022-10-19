@@ -75,25 +75,27 @@ public:
     QWidget *test;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout_2;
+    QLabel *led;
     QComboBox *Hz;
-    QLabel *label_2;
     QLabel *label;
     QSpinBox *Db;
     QPushButton *test_botton;
+    QPushButton *call_botton;
+    QComboBox *ear_choose;
+    QLabel *label_2;
+    QLabel *ear_label;
+    QPushButton *clear_botton;
     QPushButton *data_test_save;
     QLabel *label_3;
-    QComboBox *ear_choose;
-    QLabel *ear_label;
-    QLabel *led;
-    QPushButton *clear_botton;
-    QPushButton *call_botton;
+    QLabel *label_5;
+    QHBoxLayout *horizontalLayout_3;
+    QLineEdit *timeEdit;
+    QLabel *label_6;
+    QPushButton *test_over;
     QSplitter *splitter_2;
     QTableWidget *information_table_test;
     QTableWidget *data_table;
     QLabel *label_4;
-    QLabel *label_5;
-    QLineEdit *lineEdit;
-    QLabel *label_6;
 
     void setupUi(QMainWindow *chart)
     {
@@ -217,7 +219,7 @@ public:
         check_2->setGeometry(QRect(20, 20, 421, 737));
         verticalLayoutWidget = new QWidget(check_2);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 10, 404, 255));
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 430, 261));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -317,12 +319,19 @@ public:
         test->setGeometry(QRect(10, 20, 441, 737));
         gridLayoutWidget = new QWidget(test);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(60, 430, 294, 117));
+        gridLayoutWidget->setGeometry(QRect(60, 430, 320, 142));
         gridLayout_2 = new QGridLayout(gridLayoutWidget);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        led = new QLabel(gridLayoutWidget);
+        led->setObjectName(QString::fromUtf8("led"));
+        led->setLayoutDirection(Qt::RightToLeft);
+        led->setFrameShadow(QFrame::Sunken);
+        led->setAlignment(Qt::AlignCenter);
+
+        gridLayout_2->addWidget(led, 2, 2, 1, 1);
+
         Hz = new QComboBox(gridLayoutWidget);
-        Hz->addItem(QString());
         Hz->addItem(QString());
         Hz->addItem(QString());
         Hz->addItem(QString());
@@ -340,12 +349,6 @@ public:
         Hz->setFrame(true);
 
         gridLayout_2->addWidget(Hz, 2, 1, 1, 1);
-
-        label_2 = new QLabel(gridLayoutWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setFont(font1);
-
-        gridLayout_2->addWidget(label_2, 1, 0, 1, 1);
 
         label = new QLabel(gridLayoutWidget);
         label->setObjectName(QString::fromUtf8("label"));
@@ -368,6 +371,38 @@ public:
 
         gridLayout_2->addWidget(test_botton, 3, 1, 1, 1);
 
+        call_botton = new QPushButton(gridLayoutWidget);
+        call_botton->setObjectName(QString::fromUtf8("call_botton"));
+        call_botton->setFont(font1);
+
+        gridLayout_2->addWidget(call_botton, 0, 2, 1, 1);
+
+        ear_choose = new QComboBox(gridLayoutWidget);
+        ear_choose->addItem(QString());
+        ear_choose->addItem(QString());
+        ear_choose->setObjectName(QString::fromUtf8("ear_choose"));
+        ear_choose->setFont(font1);
+
+        gridLayout_2->addWidget(ear_choose, 0, 1, 1, 1);
+
+        label_2 = new QLabel(gridLayoutWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setFont(font1);
+
+        gridLayout_2->addWidget(label_2, 1, 0, 1, 1);
+
+        ear_label = new QLabel(gridLayoutWidget);
+        ear_label->setObjectName(QString::fromUtf8("ear_label"));
+        ear_label->setFont(font1);
+
+        gridLayout_2->addWidget(ear_label, 0, 0, 1, 1);
+
+        clear_botton = new QPushButton(gridLayoutWidget);
+        clear_botton->setObjectName(QString::fromUtf8("clear_botton"));
+        clear_botton->setFont(font1);
+
+        gridLayout_2->addWidget(clear_botton, 3, 0, 1, 1);
+
         data_test_save = new QPushButton(gridLayoutWidget);
         data_test_save->setObjectName(QString::fromUtf8("data_test_save"));
         QSizePolicy sizePolicy3(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -385,39 +420,37 @@ public:
 
         gridLayout_2->addWidget(label_3, 1, 2, 1, 1);
 
-        ear_choose = new QComboBox(gridLayoutWidget);
-        ear_choose->addItem(QString());
-        ear_choose->addItem(QString());
-        ear_choose->setObjectName(QString::fromUtf8("ear_choose"));
-        ear_choose->setFont(font1);
+        label_5 = new QLabel(gridLayoutWidget);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setFont(font1);
 
-        gridLayout_2->addWidget(ear_choose, 0, 1, 1, 1);
+        gridLayout_2->addWidget(label_5, 4, 0, 1, 1);
 
-        ear_label = new QLabel(gridLayoutWidget);
-        ear_label->setObjectName(QString::fromUtf8("ear_label"));
-        ear_label->setFont(font1);
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        timeEdit = new QLineEdit(gridLayoutWidget);
+        timeEdit->setObjectName(QString::fromUtf8("timeEdit"));
+        timeEdit->setLayoutDirection(Qt::LeftToRight);
+        timeEdit->setAlignment(Qt::AlignCenter);
 
-        gridLayout_2->addWidget(ear_label, 0, 0, 1, 1);
+        horizontalLayout_3->addWidget(timeEdit);
 
-        led = new QLabel(gridLayoutWidget);
-        led->setObjectName(QString::fromUtf8("led"));
-        led->setLayoutDirection(Qt::RightToLeft);
-        led->setFrameShadow(QFrame::Sunken);
-        led->setAlignment(Qt::AlignCenter);
+        label_6 = new QLabel(gridLayoutWidget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setFont(font1);
 
-        gridLayout_2->addWidget(led, 2, 2, 1, 1);
+        horizontalLayout_3->addWidget(label_6);
 
-        clear_botton = new QPushButton(gridLayoutWidget);
-        clear_botton->setObjectName(QString::fromUtf8("clear_botton"));
-        clear_botton->setFont(font1);
 
-        gridLayout_2->addWidget(clear_botton, 3, 0, 1, 1);
+        gridLayout_2->addLayout(horizontalLayout_3, 4, 1, 1, 1);
 
-        call_botton = new QPushButton(gridLayoutWidget);
-        call_botton->setObjectName(QString::fromUtf8("call_botton"));
-        call_botton->setFont(font1);
+        test_over = new QPushButton(gridLayoutWidget);
+        test_over->setObjectName(QString::fromUtf8("test_over"));
+        sizePolicy3.setHeightForWidth(test_over->sizePolicy().hasHeightForWidth());
+        test_over->setSizePolicy(sizePolicy3);
+        test_over->setFont(font1);
 
-        gridLayout_2->addWidget(call_botton, 0, 2, 1, 1);
+        gridLayout_2->addWidget(test_over, 4, 2, 1, 1);
 
         splitter_2 = new QSplitter(test);
         splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
@@ -516,22 +549,11 @@ public:
         splitter_2->addWidget(data_table);
         label_4 = new QLabel(test);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(150, 600, 121, 51));
+        label_4->setGeometry(QRect(150, 600, 161, 51));
         QFont font2;
         font2.setFamily(QString::fromUtf8("\346\245\267\344\275\223"));
         font2.setPointSize(20);
         label_4->setFont(font2);
-        label_5 = new QLabel(test);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(50, 550, 61, 21));
-        label_5->setFont(font1);
-        lineEdit = new QLineEdit(test);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(110, 550, 61, 20));
-        label_6 = new QLabel(test);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(180, 550, 61, 21));
-        label_6->setFont(font1);
         tabWidget->addTab(tab_5, QString());
         splitter->addWidget(tabWidget);
 
@@ -580,35 +602,38 @@ public:
         note_Edit->setHtml(QCoreApplication::translate("chart", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\350\257\267\345\241\253\345\206\231\350\277\207\346\225\217\345\217\262\343\200\201\347\227\205\345\217\262\347\255\211\345\220\204\347\247\215\345\275\261\345\223\215\350\257\212\346\226\255\347\273\223\346\236\234\347\232\204\345\233\240\347\264\240...</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
+"</style></head><body style=\" font-family:'SimSun'; font-size:11.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">\350\257\267\345\241\253\345\206\231\350\277\207\346\225\217\345\217\262\343\200\201\347\227\205\345\217\262\347\255\211\345\220\204\347\247\215\345\275\261\345\223\215\350\257\212\346\226\255\347\273\223\346\236\234\347\232\204\345\233\240\347\264\240...</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p></body></html>", nullptr));
         save->setText(QCoreApplication::translate("chart", "\344\277\235\345\255\230", nullptr));
         clear->setText(QCoreApplication::translate("chart", "\346\270\205\347\251\272", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("chart", "\346\267\273\345\212\240\344\277\241\346\201\257", nullptr));
+        led->setText(QCoreApplication::translate("chart", "led", nullptr));
         Hz->setItemText(0, QCoreApplication::translate("chart", "20Hz", nullptr));
         Hz->setItemText(1, QCoreApplication::translate("chart", "100Hz", nullptr));
-        Hz->setItemText(2, QCoreApplication::translate("chart", "250Hz", nullptr));
-        Hz->setItemText(3, QCoreApplication::translate("chart", "500Hz", nullptr));
-        Hz->setItemText(4, QCoreApplication::translate("chart", "1KHz", nullptr));
-        Hz->setItemText(5, QCoreApplication::translate("chart", "2KHz", nullptr));
-        Hz->setItemText(6, QCoreApplication::translate("chart", "4KHz", nullptr));
-        Hz->setItemText(7, QCoreApplication::translate("chart", "8KHz", nullptr));
-        Hz->setItemText(8, QCoreApplication::translate("chart", "16KHz", nullptr));
-        Hz->setItemText(9, QCoreApplication::translate("chart", "20KHz", nullptr));
+        Hz->setItemText(2, QCoreApplication::translate("chart", "500Hz", nullptr));
+        Hz->setItemText(3, QCoreApplication::translate("chart", "1KHz", nullptr));
+        Hz->setItemText(4, QCoreApplication::translate("chart", "2KHz", nullptr));
+        Hz->setItemText(5, QCoreApplication::translate("chart", "4KHz", nullptr));
+        Hz->setItemText(6, QCoreApplication::translate("chart", "8KHz", nullptr));
+        Hz->setItemText(7, QCoreApplication::translate("chart", "16KHz", nullptr));
+        Hz->setItemText(8, QCoreApplication::translate("chart", "20KHz", nullptr));
 
-        label_2->setText(QCoreApplication::translate("chart", "\346\265\213\350\257\225\351\237\263\345\274\272\345\272\246\357\274\232", nullptr));
         label->setText(QCoreApplication::translate("chart", "\351\242\221\347\216\207\357\274\232", nullptr));
         test_botton->setText(QCoreApplication::translate("chart", "\346\265\213\350\257\225", nullptr));
-        data_test_save->setText(QCoreApplication::translate("chart", "\346\225\260\346\215\256\344\277\235\345\255\230", nullptr));
-        label_3->setText(QCoreApplication::translate("chart", "DB HL", nullptr));
+        call_botton->setText(QCoreApplication::translate("chart", "\351\200\232\350\257\235", nullptr));
         ear_choose->setItemText(0, QCoreApplication::translate("chart", "\345\267\246\350\200\263", nullptr));
         ear_choose->setItemText(1, QCoreApplication::translate("chart", "\345\217\263\350\200\263", nullptr));
 
+        label_2->setText(QCoreApplication::translate("chart", "\346\265\213\350\257\225\351\237\263\345\274\272\345\272\246\357\274\232", nullptr));
         ear_label->setText(QCoreApplication::translate("chart", "\345\215\225\345\243\260\351\201\223\346\265\213\350\257\225\357\274\232", nullptr));
-        led->setText(QCoreApplication::translate("chart", "led", nullptr));
         clear_botton->setText(QCoreApplication::translate("chart", "\346\270\205\351\231\244\345\235\220\346\240\207", nullptr));
-        call_botton->setText(QCoreApplication::translate("chart", "\351\200\232\350\257\235", nullptr));
+        data_test_save->setText(QCoreApplication::translate("chart", "\346\225\260\346\215\256\344\277\235\345\255\230", nullptr));
+        label_3->setText(QCoreApplication::translate("chart", "DB HL", nullptr));
+        label_5->setText(QCoreApplication::translate("chart", " \346\227\266\351\227\264\357\274\232", nullptr));
+        timeEdit->setText(QCoreApplication::translate("chart", "1", nullptr));
+        label_6->setText(QCoreApplication::translate("chart", "s", nullptr));
+        test_over->setText(QCoreApplication::translate("chart", "\346\265\213\350\257\225\347\273\223\346\235\237", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = information_table_test->horizontalHeaderItem(0);
         ___qtablewidgetitem5->setText(QCoreApplication::translate("chart", "\345\247\223\345\220\215", nullptr));
         QTableWidgetItem *___qtablewidgetitem6 = information_table_test->horizontalHeaderItem(1);
@@ -649,9 +674,6 @@ public:
         QTableWidgetItem *___qtablewidgetitem21 = data_table->verticalHeaderItem(1);
         ___qtablewidgetitem21->setText(QCoreApplication::translate("chart", "\345\217\263\350\200\263", nullptr));
         label_4->setText(QCoreApplication::translate("chart", "\345\207\206\345\244\207\346\265\213\350\257\225", nullptr));
-        label_5->setText(QCoreApplication::translate("chart", " \346\227\266\351\227\264\357\274\232", nullptr));
-        lineEdit->setText(QCoreApplication::translate("chart", "1", nullptr));
-        label_6->setText(QCoreApplication::translate("chart", "s", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("chart", "\346\265\213\350\257\225", nullptr));
     } // retranslateUi
 

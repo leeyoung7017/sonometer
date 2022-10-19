@@ -42,9 +42,9 @@
   <widget class="QCustomPlot" name="widgetFFT" native="true">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>200</x>
      <y>10</y>
-     <width>601</width>
+     <width>621</width>
      <height>381</height>
     </rect>
    </property>

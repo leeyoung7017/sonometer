@@ -1,7 +1,0 @@
-*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil\ARM\ARMCC\Bin'
-Build target 'Fire_H7'
-compiling bsp_debug_usart.c...
-linking...
-Program Size: Code=43426 RO-data=862 RW-data=9012 ZI-data=69764  
-"..\..\Output\Fire_H7.axf" - 0 Error(s), 0 Warning(s).
-Build Time Elapsed:  00:00:14

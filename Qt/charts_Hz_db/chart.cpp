@@ -304,7 +304,7 @@ int chart::on_test_botton_clicked()
     data0.append('I');
     data0.append('M');
     data0.append('E');
-    data0.append(time);
+    data0.append((int)(time*10));
 
     //传输数据
     my_UdpSocket_Rx->writeDatagram(data0,QHostAddress("192.168.1.30"),UDP_PORT_LOCAL_CHART);
